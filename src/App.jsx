@@ -5,7 +5,9 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import About from "./sections/About";
 import Skills from "./sections/Skills";
+import Experience from "./sections/Experience";
 import Projects from "./sections/Projects";
+import Achievements from "./sections/Achievements";
 import Contact from "./sections/Contact";
 
 export default function App() {
@@ -14,12 +16,23 @@ export default function App() {
       <ScrollProgress />
       <Navbar />
 
-      {/* Particle animation will be inside Hero */}
+      {/* Hero (particle animation inside) */}
       <Hero />
 
+      {/* Core sections */}
       <About />
       <Skills />
+
+      {/* NEW: Experience */}
+      <Experience />
+
+      {/* Projects */}
       <Projects />
+
+      {/* NEW: Achievements */}
+      <Achievements />
+
+      {/* Contact */}
       <Contact />
 
       <Footer />

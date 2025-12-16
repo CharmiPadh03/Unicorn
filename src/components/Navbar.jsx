@@ -1,12 +1,29 @@
-import { Home, BrainCircuit, FolderKanban, Sparkles, Mail } from "lucide-react";
+import {
+  BrainCircuit,
+  FolderKanban,
+  Sparkles,
+  Mail,
+  Briefcase,
+  Trophy,
+  Menu,
+  X,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
+  const [open, setOpen] = useState(false);
 
-  /* --- INTERSECTION OBSERVER (accurate scroll spy) --- */
   useEffect(() => {
-    const sections = ["home", "about", "skills", "projects", "contact"];
+    const sections = [
+      "home",
+      "about",
+      "skills",
+      "experience",
+      "projects",
+      "achievements",
+      "contact",
+    ];
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -16,7 +33,7 @@ export default function Navbar() {
           }
         });
       },
-      { threshold: 0.45 }
+      { rootMargin: "-40% 0px -40% 0px" }
     );
 
     sections.forEach((id) => {
@@ -31,69 +48,136 @@ export default function Navbar() {
     <nav
       className="
         fixed top-6 left-1/2 -translate-x-1/2
-        w-[88%] md:w-[65%] rounded-2xl px-7 py-4
-        bg-[rgba(0,12,40,0.45)] backdrop-blur-xl
-        border border-white/10 shadow-md z-50
-        navbar-load       /* ← ADDED LOAD ANIMATION */
+        w-[95%] md:w-[80%]
+        rounded-2xl px-8 py-4
+        bg-[rgba(0,12,40,0.55)] backdrop-blur-xl
+        border border-white/10 shadow-lg z-50
+        navbar-load
       "
     >
       <div className="flex justify-between items-center">
-
-        {/* BRAND NAME */}
-        <h1
-          className="text-xl tracking-wide font-extrabold"
-          style={{ fontFamily: "'Orbitron', sans-serif", letterSpacing: "2px" }}
+        {/* BRAND → GOES TO HOME */}
+        <a
+          href="#home"
+          className="text-xl md:text-2xl font-extrabold tracking-widest cursor-pointer"
+          style={{ fontFamily: "'Orbitron', sans-serif" }}
         >
           CHARMI PADH
-        </h1>
+        </a>
 
-        {/* NAV ITEMS */}
-        <ul className="flex items-center gap-7">
+        {/* DESKTOP NAV */}
+        <ul className="hidden md:flex items-center gap-8">
+          <NavItem
+            label="About"
+            href="#about"
+            icon={<Sparkles size={20} />}
+            active={activeSection === "about"}
+            anim="glow"
+          />
 
-          <NavItem label="Home" href="#home" icon={<Home />}
-            active={activeSection === "home"} anim="pulse" />
+          <NavItem
+            label="Skills"
+            href="#skills"
+            icon={<BrainCircuit size={20} />}
+            active={activeSection === "skills"}
+            anim="rotate"
+          />
 
-          <NavItem label="About" href="#about" icon={<Sparkles />}
-            active={activeSection === "about"} anim="glow" />
+          <NavItem
+            label="Experience"
+            href="#experience"
+            icon={<Briefcase size={20} />}
+            active={activeSection === "experience"}
+            anim="slide"
+          />
 
-          <NavItem label="Skills" href="#skills" icon={<BrainCircuit />}
-            active={activeSection === "skills"} anim="rotate" />
+          <NavItem
+            label="Projects"
+            href="#projects"
+            icon={<FolderKanban size={20} />}
+            active={activeSection === "projects"}
+            anim="sparkle"
+          />
 
-          <NavItem label="Projects" href="#projects" icon={<FolderKanban />}
-            active={activeSection === "projects"} anim="sparkle" />
+          <NavItem
+            label="Achievements"
+            href="#achievements"
+            icon={<Trophy size={20} />}
+            active={activeSection === "achievements"}
+            anim="trophy"
+          />
 
-          <NavItem label="Contact" href="#contact" icon={<Mail />}
-            active={activeSection === "contact"} anim="bounce" />
-
+          <NavItem
+            label="Contact"
+            href="#contact"
+            icon={<Mail size={20} />}
+            active={activeSection === "contact"}
+            anim="bounce"
+          />
         </ul>
+
+        {/* MOBILE TOGGLE */}
+        <button
+          className="md:hidden text-white"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <X size={26} /> : <Menu size={26} />}
+        </button>
       </div>
+
+      {/* MOBILE MENU */}
+      {open && (
+        <ul className="md:hidden mt-6 flex flex-col gap-4 animate-slideDown">
+          {[
+            ["About", "#about"],
+            ["Skills", "#skills"],
+            ["Experience", "#experience"],
+            ["Projects", "#projects"],
+            ["Achievements", "#achievements"],
+            ["Contact", "#contact"],
+          ].map(([label, href]) => (
+            <li key={label}>
+              <a
+                href={href}
+                onClick={() => setOpen(false)}
+                className={`block px-4 py-2 rounded-lg text-base transition
+                  ${
+                    activeSection === href.replace("#", "")
+                      ? "text-[#A56BFF]"
+                      : "text-(--text-muted)"
+                  }`}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </nav>
   );
 }
 
+/* ================= NAV ITEM ================= */
 
-/* --- NavItem Component --- */
 function NavItem({ href, label, icon, active, anim }) {
   return (
     <li>
       <a
         href={href}
-        className="flex items-center gap-2 text-sm transition-all duration-300"
+        className="flex items-center gap-3 text-base transition-all duration-300"
       >
-        {/* ICON (active → animation | inactive → muted) */}
         <span
-          className={
-            active
-              ? `icon-${anim}-active`
-              : "nav-icon-inactive"
-          }
+          className={active ? `icon-${anim}-active` : "nav-icon-inactive"}
           style={{ color: active ? "#A56BFF" : "var(--text-muted)" }}
         >
           {icon}
         </span>
 
-        {/* LABEL (active → purple) */}
-        <span className={active ? "nav-active-label" : "nav-label"}>
+        <span
+          className={`${
+            active ? "nav-active-label" : "nav-label"
+          } text-[1.05rem]`}
+        >
           {label}
         </span>
       </a>

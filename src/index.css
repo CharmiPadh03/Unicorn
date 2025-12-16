@@ -34,139 +34,19 @@ body {
   overflow-x: hidden;
 }
 
-a { text-decoration: none; color: inherit; }
-
-/* Smooth Scroll */
-html { scroll-behavior: smooth; }
-
-/* =====================================
-   NAVBAR ANIMATION (Smooth)
-===================================== */
-@keyframes navbarEnter {
-  0% { opacity: 0; transform: translateY(-10px); }
-  100% { opacity: 1; transform: translateY(0); }
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.nav-animate {
-  animation: navbarEnter 0.45s ease-out forwards;
-  will-change: transform, opacity;
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
 
 /* =====================================
-   HERO FADE-UP ANIMATION
+   NAVBAR LOAD ANIMATION
 ===================================== */
-@keyframes heroFadeUp {
-  0% { opacity: 0; transform: translateY(18px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-.fade-up {
-  animation: heroFadeUp 0.7s ease-out forwards;
-  will-change: opacity, transform;
-}
-
-.delay-100 { animation-delay: .1s; }
-.delay-200 { animation-delay: .2s; }
-.delay-300 { animation-delay: .3s; }
-.delay-400 { animation-delay: .4s; }
-
-.container-max {
-  max-width: 1100px;
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-/* ensure anchor targets are not hidden under navbar */
-section {
-  scroll-margin-top: 5.25rem;
-}
-
-/* nav-active-pill (kept) */
-.nav-active-pill {
-  border-radius: 9999px !important;
-}
-
-/* =====================================
-   ACTIVE NAV ICON ANIMATIONS (CLEAN)
-   – ONLY ACTIVE ITEMS ANIMATE
-===================================== */
-
-/* Inactive icons (no animation) */
-.nav-icon-inactive {
-  opacity: 0.75;
-  transition: transform 0.3s ease, opacity 0.3s ease, color 0.3s ease;
-}
-
-/* ACTIVE → Home Pulse */
-.icon-pulse-active {
-  animation: pulseNav 1.6s infinite ease-in-out;
-}
-@keyframes pulseNav {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.22); }
-}
-
-/* ACTIVE → About Glow (clean, no shadows) */
-.icon-glow-active {
-  animation: glowNav 2.2s infinite ease-in-out;
-}
-@keyframes glowNav {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.75; transform: scale(1.05); }
-}
-
-/* ACTIVE → Skills Rotate */
-.icon-rotate-active {
-  animation: rotateNav 1.4s linear infinite;
-}
-@keyframes rotateNav {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ACTIVE → Projects Sparkle */
-.icon-sparkle-active {
-  animation: sparkleNav 1.6s infinite ease-in-out;
-}
-@keyframes sparkleNav {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-/* ACTIVE → Contact Bounce */
-.icon-bounce-active {
-  animation: bounceNav 1.3s infinite ease-in-out;
-}
-@keyframes bounceNav {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-/* =====================================
-   ACTIVE + INACTIVE LABEL STYLES
-===================================== */
-
-.nav-label {
-  color: var(--text-muted);
-  transition: color 0.3s ease;
-}
-
-/* ACTIVE SECTION NAME → PURE PURPLE */
-.nav-active-label {
-  color: #A56BFF !important;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-/* ================================
-   NAVBAR LOAD-IN ANIMATION
-================================ */
-
-.navbar-load {
-  opacity: 0;
-  transform: translateY(-15px) scale(0.95);
-  animation: navbarAppear 0.75s ease-out forwards;
-}
-
 @keyframes navbarAppear {
   0% {
     opacity: 0;
@@ -181,31 +61,197 @@ section {
     transform: translateY(0) scale(1);
   }
 }
-/* =====================================
-   Availability Badge (Green Status Pill)
-===================================== */
 
-/* =====================================
-   Availability Badge — CLEAN, NO GLOW
-===================================== */
-
-.availability-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(0, 255, 0, 0.08);  /* subtle green tint */
-  border: 1px solid rgba(0, 255, 0, 0.4); /* clean border, NO GLOW */
-  padding: 6px 16px;
-  border-radius: 50px;
-  color: #7eff7e;  /* clean green text */
-  font-size: 0.9rem;
-  font-weight: 500;
+.navbar-load {
+  animation: navbarAppear 0.75s ease-out forwards;
 }
 
-/* Green dot — NO glow, NO animation */
-.availability-badge .dot {
-  width: 10px;
-  height: 10px;
-  background: #00ff6a;
-  border-radius: 50%;
+/* =====================================
+   HERO FADE-UP ANIMATION
+===================================== */
+@keyframes heroFadeUp {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: heroFadeUp 0.7s ease-out forwards;
+}
+
+.delay-100 { animation-delay: .1s; }
+.delay-200 { animation-delay: .2s; }
+.delay-300 { animation-delay: .3s; }
+.delay-400 { animation-delay: .4s; }
+
+/* =====================================
+   CONTAINER
+===================================== */
+.container-max {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* Prevent anchor overlap with navbar */
+section {
+  scroll-margin-top: 5.25rem;
+}
+
+/* =====================================
+   NAV ICON STATES
+===================================== */
+
+/* Inactive icons */
+.nav-icon-inactive {
+  opacity: 0.7;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* ACTIVE → Pulse */
+.icon-pulse-active {
+  animation: pulseNav 1.6s infinite ease-in-out;
+}
+@keyframes pulseNav {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.22); }
+}
+
+/* ACTIVE → Glow (soft) */
+.icon-glow-active {
+  animation: glowNav 2.2s infinite ease-in-out;
+}
+@keyframes glowNav {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.05); }
+}
+
+/* ACTIVE → Rotate */
+.icon-rotate-active {
+  animation: rotateNav 1.4s linear infinite;
+}
+@keyframes rotateNav {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ACTIVE → Sparkle */
+.icon-sparkle-active {
+  animation: sparkleNav 1.6s infinite ease-in-out;
+}
+@keyframes sparkleNav {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ACTIVE → Bounce */
+.icon-bounce-active {
+  animation: bounceNav 1.3s infinite ease-in-out;
+}
+@keyframes bounceNav {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ACTIVE → Slide (Experience) */
+.icon-slide-active {
+  animation: slideIcon 1.6s ease-in-out infinite;
+}
+@keyframes slideIcon {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+/* ACTIVE → Trophy Pulse (Achievements) */
+.icon-trophy-active {
+  animation: trophyPulse 1.8s ease-in-out infinite;
+}
+@keyframes trophyPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.85; }
+}
+
+/* =====================================
+   NAV LABELS
+===================================== */
+.nav-label {
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.nav-active-label {
+  color: #A56BFF;
+  font-weight: 600;
+}
+
+/* =====================================
+   EMOJI ANIMATIONS (NAVBAR)
+===================================== */
+.nav-emoji {
+  opacity: 0.65;
+}
+
+@keyframes emojiFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes emojiBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes emojiRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.emoji-glow {
+  animation: emojiFloat 2.4s ease-in-out infinite;
+}
+
+.emoji-bounce {
+  animation: emojiBounce 1.4s ease-in-out infinite;
+}
+
+.emoji-rotate {
+  animation: emojiRotate 2.6s linear infinite;
+}
+
+.emoji-sparkle {
+  animation: emojiFloat 1.8s ease-in-out infinite;
+}
+
+/* =====================================
+   MOBILE NAV DROPDOWN
+===================================== */
+@keyframes slideDownNav {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDownNav 0.35s ease-out forwards;
+}
+
+/* =====================================
+   PERFORMANCE OPTIMIZATION
+===================================== */
+.icon-pulse-active,
+.icon-glow-active,
+.icon-rotate-active,
+.icon-sparkle-active,
+.icon-bounce-active,
+.icon-slide-active,
+.icon-trophy-active,
+.emoji-glow,
+.emoji-bounce,
+.emoji-rotate,
+.emoji-sparkle {
+  will-change: transform, opacity;
 }
