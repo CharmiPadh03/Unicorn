@@ -61,7 +61,7 @@ export default function Experience() {
             viewport={{ once: true }}
             className="relative max-w-6xl mx-auto px-6"
           >
-            {/* SMALL IMAGE PANEL */}
+            {/* IMAGE PANEL */}
             {exp.image && (
               <motion.div
                 initial={{
@@ -88,14 +88,8 @@ export default function Experience() {
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                   }}
-                  className="
-                    absolute inset-0
-                    w-full h-full
-                    object-cover
-                  "
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
-
-                {/* SOFT OVERLAY */}
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/25 to-black/10" />
               </motion.div>
             )}
@@ -131,20 +125,29 @@ export default function Experience() {
                 </div>
 
                 <div>
+                  {/* 1️⃣ COMPANY NAME */}
                   <h3 className="text-lg md:text-2xl font-semibold">
-                    {exp.title}
+                    {exp.org}
                   </h3>
 
-                  <p className="text-sm text-(--text-muted)">
-                    {exp.role} • {exp.org}
+                  {/* 2️⃣ ROLE */}
+                  <p className="text-sm font-medium text-(--accent)">
+                    {exp.role}
                   </p>
 
+                  {/* PERIOD */}
                   <p className="text-xs text-(--text-muted)">
                     {exp.period}
+                  </p>
+
+                  {/* 3️⃣ PROJECT TITLE */}
+                  <p className="mt-2 text-sm font-semibold">
+                    {exp.title}
                   </p>
                 </div>
               </div>
 
+              {/* 4️⃣ DETAILS */}
               <p className="mt-4 text-sm leading-relaxed">
                 {exp.description}
               </p>
