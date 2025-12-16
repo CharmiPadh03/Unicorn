@@ -65,14 +65,7 @@ const projects = [
     ],
     image: "/projects/Reliance.png",
   },
-  {
-    title: "Reinforcement Learning–Based Intelligent System (IPR Internship)",
-    desc:
-      "Currently working on a reinforcement learning–based research project at IPR, focusing on designing and training agents to learn optimal decision-making strategies through interaction with dynamic environments.",
-    role: "Project Trainee (Ongoing – 4 Months)",
-    tech: ["Reinforcement Learning", "Python", "Deep Learning", "Simulation"],
-    image: "/projects/ipr-rl.png",
-  },
+  
 ];
 
 const researchProjects = [
