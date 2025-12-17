@@ -14,34 +14,72 @@ const achievements = [
     title: "Multiple Hackathon Finalist",
     desc: "AI, Finance, SpaceTech & Healthcare problem statements.",
   },
+  {
+    title: "IEEE AIMV 2025 – Research Paper Publication",
+    desc:
+      "Presented and published research work at the 2nd IEEE International Conference on Artificial Intelligence & Machine Vision (AIMV 2025). The work received institutional recognition and research grant support.",
+  },
 ];
 
 export default function Achievements() {
   return (
-    <section id="achievements" className="py-24 bg-[#0E1324]">
-      <h2 className="text-4xl font-bold text-center mb-16">
+    <section
+      id="achievements"
+      className="relative py-24 bg-[#0E1324] overflow-hidden"
+    >
+      {/* HEADING */}
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-4xl font-bold text-center mb-16"
+      >
         Achievements<span className="text-(--accent)">.</span>
-      </h2>
+      </motion.h2>
 
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+      {/* LIST */}
+      <div className="max-w-6xl mx-auto px-6 flex flex-col gap-10">
         {achievements.map((a, i) => (
           <motion.div
             key={i}
-            whileHover={{ scale: 1.05 }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.15 }}
-            viewport={{ once: true }}
-            className="relative p-6 rounded-2xl bg-white/5 border border-white/10 
-                       overflow-hidden group"
+            initial={{
+              opacity: 0,
+              x: i % 2 === 0 ? -120 : 120,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{
+              duration: 0.8,
+              ease: "easeOut",
+            }}
+            className="
+              relative
+              bg-white/5 border border-white/10
+              backdrop-blur-xl
+              rounded-2xl
+              p-6 md:p-7
+              flex items-start gap-4
+            "
           >
-            {/* Glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-(--accent)/20 to-transparent 
-                            opacity-0 group-hover:opacity-100 transition-opacity" />
+            {/* ICON */}
+            <div className="text-(--accent) mt-1 shrink-0">
+              <Trophy size={22} />
+            </div>
 
-            <Trophy className="text-(--accent) mb-4" />
-            <h3 className="text-lg font-semibold">{a.title}</h3>
-            <p className="text-sm text-(--text-muted) mt-2">{a.desc}</p>
+            {/* CONTENT */}
+            <div>
+              <h3 className="text-lg md:text-xl font-semibold">
+                {a.title}
+              </h3>
+
+              <p className="text-sm text-(--text-muted) mt-2 leading-relaxed">
+                {a.desc}
+              </p>
+            </div>
           </motion.div>
         ))}
       </div>

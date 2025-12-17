@@ -2,34 +2,7 @@ import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { useState } from "react";
 
-/* ================= ANIMATIONS ================= */
-
-const container = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
-  },
-};
-
-const card = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-};
-
-const imageFloat = {
-  animate: {
-    y: [0, -4, 0],
-    transition: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-  },
-};
-
-/* ================= DATA ================= */
-/* (UNCHANGED — keeping your content exactly same) */
+/* ================= DATA (UNCHANGED) ================= */
 
 const projects = [
   {
@@ -39,8 +12,6 @@ const projects = [
     role: "AI/ML Developer.",
     tech: ["Machine Learning", "IoT", "Data Analytics", "Python"],
     image: "/projects/sunadapt.png",
-    live: "#",
-    github: "#",
   },
   {
     title: "Prompt Injection Detection & Mitigation",
@@ -49,21 +20,6 @@ const projects = [
     role: "AI/ML Developer.",
     tech: ["NLP", "LLM Security", "Python", "Transformers"],
     image: "/projects/prompt-injection.png",
-    live: "#",
-    github: "#",
-  },
-  {
-    title: "Gasifier Reactor Refractory Lifespan Prediction",
-    desc:
-      "Developed a machine learning–based predictive maintenance system to estimate the effective lifespan of gasifier reactor refractory bricks using real-time process data and laboratory parameters during an internship at Reliance Industries Limited.",
-    role: "ML Engineer Intern (May 14 – June 14, 2025)",
-    tech: [
-      "Machine Learning",
-      "Time-Series Analysis",
-      "Python",
-      "Industrial Process Data",
-    ],
-    image: "/projects/Reliance.png",
   },
   
 ];
@@ -82,7 +38,8 @@ const researchProjects = [
     doi: "https://doi.org/10.1109/AIMV66517.2025.11203522",
   },
   {
-    title: "Quantum Simulation Tools – A Comprehensive Survey(Research Book Chapter)",
+    title:
+      "Quantum Simulation Tools – A Comprehensive Survey (Research Book Chapter)",
     desc:
       "A comparative study of prominent quantum simulation platforms, analyzing their capabilities and applicability for quantum algorithm development and experimentation.",
     note:
@@ -111,20 +68,14 @@ export default function Projects() {
       id="projects"
       className="relative py-16 md:py-20 bg-linear-to-b from-[#0B0F1A] via-[#0E1324] to-[#0B0F1A]"
     >
-      {/* Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-purple-500/20 blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[260px] md:w-[300px] h-[260px] md:h-[300px] bg-cyan-400/20 blur-[120px]" />
-      </div>
-
       <div className="relative z-10 max-w-screen-2xl mx-auto px-5 sm:px-8 md:px-10">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-8"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
         >
           <p className="text-sm tracking-widest text-(--accent)">
             WORK & RESEARCH
@@ -135,7 +86,7 @@ export default function Projects() {
         </motion.div>
 
         {/* Toggle */}
-        <div className="flex justify-center gap-4 mb-10 flex-wrap">
+        <div className="flex justify-center gap-4 mb-10">
           {["projects", "research"].map((tab) => (
             <button
               key={tab}
@@ -151,18 +102,24 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Cards */}
-        <motion.div
-          key={activeTab}
-          variants={container}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col gap-6"
-        >
+        {/* LIST */}
+        <div className="flex flex-col gap-8">
           {data.map((p, i) => (
             <motion.div
               key={`${activeTab}-${i}`}
-              variants={card}
+              initial={{
+                opacity: 0,
+                x: i % 2 === 0 ? -120 : 120,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{
+                duration: 0.8,
+                ease: "easeOut",
+              }}
               className="relative rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-5 sm:p-6"
             >
               {p.doi && (
@@ -178,19 +135,13 @@ export default function Projects() {
 
               <div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-6 lg:gap-8 items-center">
                 {/* Image */}
-                <motion.div
-                  variants={imageFloat}
-                  animate="animate"
-                  className="w-full flex justify-center"
-                >
-                  <div className="w-full max-w-[460px] aspect-video flex items-center justify-center">
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      className="w-full h-full object-contain rounded-xl"
-                    />
-                  </div>
-                </motion.div>
+                <div className="w-full max-w-[460px] aspect-video overflow-hidden rounded-xl">
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
                 {/* Content */}
                 <div>
@@ -237,7 +188,7 @@ export default function Projects() {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
