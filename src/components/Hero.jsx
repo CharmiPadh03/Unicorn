@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Github } from "lucide-react";
 import LetterGlitchBackground from "../components/LetterGlitchBackground";
 
 /* ================= ANIMATIONS ================= */
@@ -77,10 +78,8 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      {/* Background Animation */}
       <LetterGlitchBackground />
 
-      {/* HERO CONTENT */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -100,16 +99,20 @@ export default function Hero() {
         {/* Subtitle */}
         <motion.p
           variants={fadeUpBlur}
-          className="text-lg text-(--text-muted)"
+          className="text-base text-(--text-muted)"
         >
-          AI/ML Developer • Researcher • Full Stack
+          AI/ML Developer • Researcher
         </motion.p>
 
         {/* Main Heading */}
-        <h1 className="text-6xl md:text-7xl font-extrabold mt-8 leading-tight">
-          <motion.span variants={nameLeft} className="inline-block">
-            Hi, I’m {" "}
+        <h1 className="text-5xl md:text-6xl font-extrabold mt-8 leading-tight">
+          <motion.span
+            variants={nameLeft}
+            className="inline-block mr-6"
+          >
+            Hi, I’m
           </motion.span>
+
           <motion.span
             variants={nameRight}
             className="inline-block text-(--accent)"
@@ -121,27 +124,49 @@ export default function Hero() {
         {/* Description */}
         <motion.p
           variants={fadeUpBlur}
-          className="text-lg text-(--text-muted) max-w-2xl mx-auto mt-10 leading-relaxed"
+          className="text-base text-(--text-muted) max-w-2xl mx-auto mt-10 leading-relaxed"
         >
           I build intelligent deep learning models and modern full-stack
           applications focused on real-world reliability and impact.
         </motion.p>
 
-        {/* CTA Button */}
+        {/* CTA Buttons */}
         <motion.div
           variants={fadeUpBlur}
-          className="flex justify-center mt-12"
+          className="flex justify-center gap-5 mt-10"
         >
+                <motion.a
+        href="/resume/Charmi_Padh_Resume.pdf"
+        download
+        whileHover={{
+          scale: 1.05,
+          boxShadow: "0 0 20px rgba(165,107,255,0.6)",
+        }}
+        whileTap={{ scale: 0.97 }}
+        className="px-7 py-3 text-base bg-(--accent) rounded-md"
+      >
+        Resume
+      </motion.a>
+
+
+          {/* GitHub */}
           <motion.a
-            href="#projects"
+            href="https://github.com/CharmiPadh03"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{
               scale: 1.05,
-              boxShadow: "0 0 25px rgba(165,107,255,0.6)",
+              boxShadow: "0 0 24px rgba(165,107,255,0.45)",
             }}
             whileTap={{ scale: 0.97 }}
-            className="px-10 py-4 text-lg bg-(--accent) rounded-md"
+            className="
+              px-6 py-3 text-base rounded-md
+              bg-linear-to-r from-[#6D28D9] via-[#7C3AED] to-[#9333EA]
+              text-white flex items-center gap-2
+            "
           >
-            Resume
+            <Github size={20} />
+            GitHub
           </motion.a>
         </motion.div>
       </motion.div>
