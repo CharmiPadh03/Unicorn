@@ -25,7 +25,6 @@ function DecryptedText({ text, start }) {
 
     const interval = setInterval(() => {
       frame++;
-
       setDisplay(
         text
           .split("")
@@ -47,7 +46,7 @@ function DecryptedText({ text, start }) {
     return () => clearInterval(interval);
   }, [start, text, done]);
 
-  return <span className="inline-block">{display || text}</span>;
+  return <span>{display || text}</span>;
 }
 
 /* ================= ANIMATIONS ================= */
@@ -70,6 +69,17 @@ const fadeUp = {
     transition: {
       duration: 1.8,
       ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const timeline = {
+  hidden: { scaleX: 0 },
+  visible: {
+    scaleX: 1,
+    transition: {
+      duration: 2.2,
+      ease: "easeInOut",
     },
   },
 };
@@ -103,6 +113,12 @@ const journey = [
 export default function About() {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
+  const educationRef = useRef(null);
+
+  const isEducationInView = useInView(educationRef, {
+    once: true,
+    margin: "-120px",
+  });
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -118,12 +134,18 @@ export default function About() {
 
   return (
     <section
-      id="about" // ✅ REQUIRED FOR NAVBAR
+      id="about"
       ref={sectionRef}
-      className="relative bg-[#0B0F1A] text-gray-200 px-6 py-32 space-y-32 overflow-hidden"
+      className="
+        relative bg-[#0B0F1A] text-gray-200
+        px-4 sm:px-6
+        py-20 md:py-32
+        space-y-20 md:space-y-32
+        overflow-hidden
+      "
     >
-      {/* ================= SCROLL INDICATOR ================= */}
-      <div className="fixed right-6 top-1/2 -translate-y-1/2 h-56 w-px bg-white/10">
+      {/* Scroll Indicator (desktop only) */}
+      <div className="hidden md:block fixed right-6 top-1/2 -translate-y-1/2 h-56 w-px bg-white/10">
         <motion.div
           style={{ height }}
           transition={{ duration: 1.4, ease: "easeInOut" }}
@@ -131,82 +153,70 @@ export default function About() {
         />
       </div>
 
-      {/* ================= ABOUT OVERVIEW ================= */}
+      {/* ABOUT */}
       <motion.div
         variants={container}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-120px" }}
+        animate="visible"
         className="max-w-4xl mx-auto text-center"
       >
-        <motion.p
-          variants={fadeUp}
-          className="text-sm tracking-[0.3em] text-gray-400"
-        >
+        <motion.p variants={fadeUp} className="text-xs sm:text-sm tracking-[0.3em] text-gray-400">
           ABOUT
         </motion.p>
 
         <motion.h1
           ref={headingRef}
-          className="text-4xl md:text-5xl font-extrabold mt-6"
+          className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-6"
         >
-          <DecryptedText text="Observe" start={startDecrypt} />
-          <span className="mx-2">.</span>
-          <DecryptedText text="Model" start={startDecrypt} />
-          <span className="mx-2">.</span>
-          <DecryptedText text="Refine" start={startDecrypt} />
-          <span className="mx-2">.</span>
+          <DecryptedText text="Observe" start={startDecrypt} /> .
+          <DecryptedText text="Model" start={startDecrypt} /> .
+          <DecryptedText text="Refine" start={startDecrypt} /> .
           <DecryptedText text="Repeat" start={startDecrypt} />
         </motion.h1>
 
         <motion.p
           variants={fadeUp}
-          className="mt-10 text-gray-400 leading-loose"
+          className="mt-8 sm:mt-10 text-sm sm:text-base text-gray-400 leading-relaxed sm:leading-loose"
         >
           I’m an ML Engineer and a Computer Engineering student (B.E., 6th
-          semester), focused on building intelligent systems that perform reliably
-          beyond controlled environments. Rather than concentrating solely on
-          model accuracy, I prioritize understanding data behavior, system
-          stability, and real-world performance. My work is driven by a
-          research-oriented mindset, strong engineering discipline, and
-          continuous experimentation to deliver solutions that are robust,
-          interpretable, and practically deployable.
+          semester), focused on building intelligent systems that perform
+          reliably beyond controlled environments.
         </motion.p>
       </motion.div>
 
-      {/* ================= EDUCATION ================= */}
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-120px" }}
-        className="max-w-7xl mx-auto"
-      >
-        <div className="flex items-center gap-3 mb-16">
+      {/* EDUCATION */}
+      <div ref={educationRef} className="max-w-7xl mx-auto">
+        <div className="flex items-center gap-3 mb-12 md:mb-16">
           <GraduationCap size={26} />
-          <h2 className="text-3xl font-bold">Education</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold">Education</h2>
         </div>
 
         <div className="relative overflow-x-auto pb-16">
+          {/* TIMELINE */}
           <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2.2, ease: "easeInOut" }}
+            variants={timeline}
+            initial="hidden"
+            animate={isEducationInView ? "visible" : "hidden"}
             className="origin-left absolute top-6 left-0 w-full h-px bg-white/20"
           />
 
-          <div className="relative flex justify-between min-w-[1200px] gap-24">
+          <div
+            className="
+              relative flex justify-between
+              min-w-[800px] sm:min-w-[1000px] md:min-w-[1200px]
+              gap-24
+            "
+          >
             {journey.map((item, index) => (
               <motion.div
                 key={index}
                 variants={fadeUp}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.6 }}
+                initial="hidden"
+                animate={isEducationInView ? "visible" : "hidden"}
                 className="max-w-xs"
               >
                 <div
-                  className={`relative z-10 w-14 h-14 rounded-full flex items-center justify-center mb-8
+                  className={`w-14 h-14 rounded-full flex items-center justify-center mb-8
                   ${
                     item.current
                       ? "border-2 border-[#4F8CFF] shadow-[0_0_28px_rgba(79,140,255,0.45)]"
@@ -227,7 +237,7 @@ export default function About() {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

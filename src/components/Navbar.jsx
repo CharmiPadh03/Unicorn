@@ -47,19 +47,21 @@ export default function Navbar() {
   return (
     <nav
       className="
-        fixed top-6 left-1/2 -translate-x-1/2
-        w-[95%] md:w-[80%]
-        rounded-2xl px-8 py-4
+        fixed top-4 sm:top-6 left-1/2 -translate-x-1/2
+        w-[92%] sm:w-[88%] md:w-[80%]
+        rounded-xl sm:rounded-2xl
+        px-4 sm:px-6 md:px-8
+        py-3 sm:py-4
         bg-[rgba(0,12,40,0.55)] backdrop-blur-xl
-        border border-white/10 shadow-lg z-50
-        navbar-load
+        border border-white/10 shadow-lg
+        z-50
       "
     >
       <div className="flex justify-between items-center">
-        {/* BRAND → GOES TO HOME */}
+        {/* BRAND */}
         <a
           href="#home"
-          className="text-xl md:text-2xl font-extrabold tracking-widest cursor-pointer"
+          className="text-lg sm:text-xl md:text-2xl font-extrabold tracking-widest"
           style={{ fontFamily: "'Orbitron', sans-serif" }}
         >
           CHARMI PADH
@@ -118,7 +120,7 @@ export default function Navbar() {
 
         {/* MOBILE TOGGLE */}
         <button
-          className="md:hidden text-white"
+          className="md:hidden text-white p-2 rounded-lg"
           onClick={() => setOpen(!open)}
         >
           {open ? <X size={26} /> : <Menu size={26} />}
@@ -127,7 +129,7 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {open && (
-        <ul className="md:hidden mt-6 flex flex-col gap-4 animate-slideDown">
+        <ul className="md:hidden mt-4 flex flex-col gap-2">
           {[
             ["About", "#about"],
             ["Skills", "#skills"],
@@ -140,12 +142,15 @@ export default function Navbar() {
               <a
                 href={href}
                 onClick={() => setOpen(false)}
-                className={`block px-4 py-2 rounded-lg text-base transition
+                className={`
+                  block w-full px-4 py-3 rounded-lg
+                  text-sm sm:text-base transition
                   ${
                     activeSection === href.replace("#", "")
-                      ? "text-[#A56BFF]"
+                      ? "text-[#A56BFF] bg-white/5"
                       : "text-(--text-muted)"
-                  }`}
+                  }
+                `}
               >
                 {label}
               </a>
