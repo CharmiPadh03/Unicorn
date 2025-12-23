@@ -52,10 +52,6 @@ export default function Contact() {
           <h2 className="text-2xl font-semibold">Connect With Me</h2>
         </motion.div>
 
-        <p className="text-sm text-(--text-muted) mb-6 max-w-xl">
-          Connect with me through social platforms or academic profiles.
-        </p>
-
         <div className="h-px w-full bg-white/10 mb-20" />
 
         {/* ICON ROW */}
