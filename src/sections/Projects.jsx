@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { useState } from "react";
 
-/* ================= DATA (UNCHANGED) ================= */
+/* ================= DATA (UNCHANGED EXCEPT GITHUB FIELD) ================= */
 
 const projects = [
   {
@@ -12,6 +12,7 @@ const projects = [
     role: "AI/ML Developer.",
     tech: ["Machine Learning", "IoT", "Data Analytics", "Python"],
     image: "/projects/sunadapt.png",
+    github: "https://github.com/CharmiPadh03/SunAdapt",
   },
   {
     title: "Prompt Injection Detection & Mitigation",
@@ -20,8 +21,8 @@ const projects = [
     role: "AI/ML Developer.",
     tech: ["NLP", "LLM Security", "Python", "Transformers"],
     image: "/projects/prompt-injection.png",
+    github: "https://github.com/CharmiPadh03/Prompt-Injection-Prevention",
   },
-  
 ];
 
 const researchProjects = [
@@ -78,7 +79,7 @@ export default function Projects() {
           className="text-center mb-10"
         >
           <p className="text-sm tracking-widest text-(--accent)">
-            WORK & RESEARCH
+            WORK
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-2">
             Projects & <span className="text-(--accent)">Research</span>
@@ -122,16 +123,32 @@ export default function Projects() {
               }}
               className="relative rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-5 sm:p-6"
             >
-              {p.doi && (
-                <a
-                  href={p.doi}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute top-4 right-4 text-(--accent)"
-                >
-                  <ExternalLink size={18} />
-                </a>
-              )}
+              {/* TOP RIGHT ICONS */}
+              <div className="absolute top-4 right-4 flex gap-3">
+                {p.github && (
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:scale-110 transition"
+                    title="View on GitHub"
+                  >
+                    <Github size={18} />
+                  </a>
+                )}
+
+                {p.doi && (
+                  <a
+                    href={p.doi}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-(--accent) hover:scale-110 transition"
+                    title="View Publication"
+                  >
+                    <ExternalLink size={18} />
+                  </a>
+                )}
+              </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-6 lg:gap-8 items-center">
                 {/* Image */}

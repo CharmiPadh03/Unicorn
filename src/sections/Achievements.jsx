@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { Linkedin } from "lucide-react";
 import { useState } from "react";
 
 /* ================= ACHIEVEMENTS DATA ================= */
@@ -16,6 +17,7 @@ const achievements = [
     description:
       "Received a conference grant of ₹2,500 for presenting and publishing the research paper titled “TrafficEye: Intelligent Traffic Optimization Using a Deep Learning Approach” at IEEE AIMV 2025.",
     tags: ["IEEE", "Research Publication", "Deep Learning", "Traffic AI"],
+    linkedin: "https://www.linkedin.com/posts/YOUR_AIMV_LINK",
   },
   {
     title: "Research Project Grant – Secure Park",
@@ -29,6 +31,7 @@ const achievements = [
     description:
       "Awarded a research project grant of ₹69,017 for the project “Secure Park: Real-Time Edge AI Vision and IoT-Based Campus Security and Parking Ecosystem for KSV.”",
     tags: ["Research Grant", "Edge AI", "IoT", "Computer Vision"],
+    linkedin: "https://www.linkedin.com/posts/YOUR_SECUREPARK_LINK",
   },
   {
     title: "International Conference Paper Presentation",
@@ -42,6 +45,7 @@ const achievements = [
     description:
       "Presented a peer-reviewed research paper at an international academic conference.",
     tags: ["Conference", "Research", "Presentation"],
+    linkedin: "https://www.linkedin.com/posts/YOUR_CONFERENCE_LINK",
   },
   {
     title: "Summer Internship – Reliance Industries Limited",
@@ -53,6 +57,7 @@ const achievements = [
     description:
       "Completed a summer internship at Reliance Industries Limited, working on real-time AI/ML solutions and predictive analytics.",
     tags: ["Internship", "AI/ML", "Industry Experience"],
+    linkedin: "https://www.linkedin.com/posts/YOUR_RELIANCE_LINK",
   },
   {
     title: "NPTEL Online Certification",
@@ -108,11 +113,6 @@ export default function Achievements() {
   const [activeItem, setActiveItem] = useState(null);
   const [imgIndex, setImgIndex] = useState(0);
 
-  const nextImage = () =>
-    setImgIndex((p) => (p === activeItem.images.length - 1 ? 0 : p + 1));
-  const prevImage = () =>
-    setImgIndex((p) => (p === 0 ? activeItem.images.length - 1 : p - 1));
-
   return (
     <section id="achievements" className="py-20 bg-black text-white">
       {/* TITLE */}
@@ -121,7 +121,7 @@ export default function Achievements() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-3xl font-bold text-center mb-14"
+        className="text-4xl md:text-5xl font-extrabold mt-6 text-center"
       >
         Achievements<span className="text-(--accent)">.</span>
       </motion.h2>
@@ -132,7 +132,7 @@ export default function Achievements() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="w-full px-8 lg:px-12"
+        className="w-full px-8 lg:px-12 mt-20"
       >
         <div className="columns-1 sm:columns-2 lg:columns-4 gap-10 space-y-10">
           {achievements.map((item, idx) => {
@@ -175,20 +175,31 @@ export default function Achievements() {
                   </div>
                 </div>
 
-                {/* TAGS */}
+                {/* TAGS + LINKEDIN */}
                 <div className="px-5 py-4 border-t border-white/5">
-                  <div className="flex flex-wrap gap-2">
-                    {item.tags.map((tag, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.05 }}
-                        className="px-3 py-1 text-xs rounded-full bg-purple-500/15 text-purple-400"
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex flex-wrap gap-2">
+                      {item.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 text-xs rounded-full bg-purple-500/15 text-purple-400"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {item.linkedin && (
+                      <a
+                        href={item.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-[#0A66C2] hover:scale-110 transition"
                       >
-                        {tag}
-                      </motion.span>
-                    ))}
+                        <Linkedin size={18} />
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -202,9 +213,6 @@ export default function Achievements() {
         {activeItem && (
           <motion.div
             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-6 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             onClick={() => setActiveItem(null)}
           >
             <motion.div
@@ -222,18 +230,51 @@ export default function Achievements() {
                 ✕
               </button>
 
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={imgIndex}
-                  src={activeItem.images[imgIndex]}
-                  className="max-w-full max-h-[60vh] mx-auto object-contain rounded-lg shadow-2xl"
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.4 }}
-                />
-              </AnimatePresence>
+              {/* SLIDESHOW — FIXED HEIGHT (ONLY CHANGE) */}
+              <div className="relative flex items-center justify-center h-[60vh]">
+                {activeItem.images.length > 1 && (
+                  <button
+                    onClick={() =>
+                      setImgIndex(
+                        (prev) =>
+                          (prev - 1 + activeItem.images.length) %
+                          activeItem.images.length
+                      )
+                    }
+                    className="absolute left-0 z-10 px-3 py-2 text-white text-3xl hover:scale-110 transition"
+                  >
+                    ‹
+                  </button>
+                )}
 
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={imgIndex}
+                    src={activeItem.images[imgIndex]}
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -40 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="max-h-full max-w-full object-contain rounded-lg shadow-2xl"
+                  />
+                </AnimatePresence>
+
+                {activeItem.images.length > 1 && (
+                  <button
+                    onClick={() =>
+                      setImgIndex(
+                        (prev) =>
+                          (prev + 1) % activeItem.images.length
+                      )
+                    }
+                    className="absolute right-0 z-10 px-3 py-2 text-white text-3xl hover:scale-110 transition"
+                  >
+                    ›
+                  </button>
+                )}
+              </div>
+
+              {/* TEXT (POSITION NOW FIXED) */}
               <div className="mt-6 bg-white/5 backdrop-blur-sm rounded-xl p-6">
                 <h3 className="text-xl font-semibold">
                   {activeItem.title}

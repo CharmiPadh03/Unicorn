@@ -46,12 +46,13 @@ export default function Experience() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-3xl md:text-4xl font-bold text-center mb-24"
+        className="text-4xl md:text-5xl font-extrabold mt-6 text-center"
       >
         Experience<span className="text-(--accent)">.</span>
       </motion.h2>
 
-      <div className="space-y-32">
+      {/* ⬇️ GAP BETWEEN HEADING & CARDS */}
+      <div className="mt-20 space-y-32">
         {experiences.map((exp, i) => (
           <motion.div
             key={i}
@@ -125,34 +126,28 @@ export default function Experience() {
                 </div>
 
                 <div>
-                  {/* 1️⃣ COMPANY NAME */}
                   <h3 className="text-lg md:text-2xl font-semibold">
                     {exp.org}
                   </h3>
 
-                  {/* 2️⃣ ROLE */}
                   <p className="text-sm font-medium text-(--accent)">
                     {exp.role}
                   </p>
 
-                  {/* PERIOD */}
                   <p className="text-xs text-(--text-muted)">
                     {exp.period}
                   </p>
 
-                  {/* 3️⃣ PROJECT TITLE */}
                   <p className="mt-2 text-sm font-semibold">
                     {exp.title}
                   </p>
                 </div>
               </div>
 
-              {/* 4️⃣ DETAILS */}
               <p className="mt-4 text-sm leading-relaxed">
                 {exp.description}
               </p>
 
-              {/* SKILLS */}
               <div className="mt-6 flex flex-wrap gap-3">
                 {exp.skills.map((skill, idx) => (
                   <motion.span

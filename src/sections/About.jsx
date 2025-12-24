@@ -141,7 +141,7 @@ export default function About() {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const educationRef = useRef(null);
-  const paragraphRef = useRef(null); // ✅ added
+  const paragraphRef = useRef(null);
 
   const isEducationInView = useInView(educationRef, {
     once: true,
@@ -209,9 +209,10 @@ interpretable, and practically deployable.`;
           ABOUT
         </motion.p>
 
+        {/* 🔽 SIZE REDUCED HERE */}
         <motion.h1
           ref={headingRef}
-          className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-6"
+          className="text-2xl sm:text-3xl md:text-4xl font-extrabold mt-6"
         >
           <DecryptedText text="Observe" start={startDecrypt} /> .
           <DecryptedText text="Model" start={startDecrypt} /> .
@@ -219,7 +220,6 @@ interpretable, and practically deployable.`;
           <DecryptedText text="Repeat" start={startDecrypt} />
         </motion.h1>
 
-        {/* ✅ PARAGRAPH ANIMATION STARTS ONLY WHEN PAGE IS VISITED */}
         <motion.p
           ref={paragraphRef}
           variants={paragraphContainer}
