@@ -10,7 +10,7 @@ const projects = [
     desc:
       "An intelligent system designed to optimize solar energy utilization by adapting panel orientation and energy distribution based on environmental conditions, usage patterns, and real-time data for maximum efficiency.",
     role: "AI/ML Developer.",
-    tech: ["Machine Learning", "IoT", "Data Analytics", "Python"],
+    tech: ["MATLAB", "MATLAB's Surf", "scatter3"],
     image: "/projects/sunadapt.png",
     github: "https://github.com/CharmiPadh03/SunAdapt",
   },
@@ -19,7 +19,7 @@ const projects = [
     desc:
       "A security-focused AI system designed to detect, analyze, and mitigate prompt injection attacks in large language model applications by identifying malicious intent, instruction overrides, and context manipulation attempts.",
     role: "AI/ML Developer.",
-    tech: ["NLP", "LLM Security", "Python", "Transformers"],
+    tech: [ "Python", "Transformers", "Pytorch"],
     image: "/projects/prompt-injection.png",
     github: "https://github.com/CharmiPadh03/Prompt-Injection-Prevention",
   },

@@ -126,13 +126,13 @@ export default function Contact() {
           <InfoCard
             icon={<Mail />}
             title="Email"
-            value="charmipadh03@gmail.com"
+            value="charmi.padh030206@gmail.com"
           />
 
           <InfoCard
             icon={<MapPin />}
             title="Location"
-            value="Ahmedabad, Gujarat, India"
+            value="Gandhinagar, Gujarat, India"
           />
         </motion.div>
       </div>
