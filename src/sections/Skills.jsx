@@ -28,7 +28,7 @@ const skills = [
     icon: <Brain size={20} />,
     emoji: "🧠",
     glow: "0 0 40px rgba(168,85,247,0.4)",
-    items: ["TensorFlow", "PyTorch", "NumPy", "OpenCV"],
+    items: ["TensorFlow", "PyTorch", "NumPy","Pandas", "OpenCV"],
   },
   {
     title: "Databases",

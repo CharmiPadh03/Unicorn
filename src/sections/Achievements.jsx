@@ -65,15 +65,41 @@ const achievements = [
   },
 ];
 
-/* ================= ANIMATION ================= */
+/* ================= ANIMATIONS ================= */
+
+const containerAnim = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
+  },
+};
 
 const cardAnim = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, y: 28, scale: 0.96 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: "easeOut" },
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
   },
+};
+
+const imageHover = {
+  hover: {
+    scale: 1.06,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
+const modalAnim = {
+  hidden: { opacity: 0, scale: 0.92, y: 20 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+  exit: { opacity: 0, scale: 0.95, y: 10 },
 };
 
 /* ================= COMPONENT ================= */
@@ -89,18 +115,25 @@ export default function Achievements() {
 
   return (
     <section id="achievements" className="py-20 bg-black text-white">
+      {/* TITLE */}
       <motion.h2
-        initial={{ opacity: 0, y: 8 }}
+        initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.35 }}
+        transition={{ duration: 0.6 }}
         className="text-3xl font-bold text-center mb-14"
       >
         Achievements<span className="text-(--accent)">.</span>
       </motion.h2>
 
-      {/* MASONRY GRID – GAP INCREASED */}
-      <div className="w-full px-8 lg:px-12">
+      {/* GRID */}
+      <motion.div
+        variants={containerAnim}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="w-full px-8 lg:px-12"
+      >
         <div className="columns-1 sm:columns-2 lg:columns-4 gap-10 space-y-10">
           {achievements.map((item, idx) => {
             const isLandscape = item.layout === "landscape";
@@ -109,25 +142,24 @@ export default function Achievements() {
               <motion.div
                 key={idx}
                 variants={cardAnim}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                whileHover={{ y: -4 }}
+                whileHover={{ y: -6 }}
                 onClick={() => {
                   setActiveItem(item);
                   setImgIndex(0);
                 }}
-                className="break-inside-avoid overflow-hidden rounded-xl shadow-xl bg-[#0E1324] cursor-pointer"
+                className="break-inside-avoid overflow-hidden rounded-xl bg-[#0E1324] cursor-pointer group shadow-xl"
               >
                 {/* IMAGE */}
                 <div
                   className={`relative bg-[#0B0F1A] ${
                     isLandscape ? "aspect-4/3" : "aspect-3/4"
-                  }`}
+                  } overflow-hidden`}
                 >
-                  <img
+                  <motion.img
                     src={item.images[0]}
                     alt={item.title}
+                    variants={imageHover}
+                    whileHover="hover"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
 
@@ -147,13 +179,15 @@ export default function Achievements() {
                 <div className="px-5 py-4 border-t border-white/5">
                   <div className="flex flex-wrap gap-2">
                     {item.tags.map((tag, i) => (
-                      <span
+                      <motion.span
                         key={i}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: i * 0.05 }}
                         className="px-3 py-1 text-xs rounded-full bg-purple-500/15 text-purple-400"
-
                       >
                         {tag}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </div>
@@ -161,21 +195,25 @@ export default function Achievements() {
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
-      {/* MODAL (UNCHANGED) */}
+      {/* MODAL */}
       <AnimatePresence>
         {activeItem && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-6"
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-6 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setActiveItem(null)}
           >
             <motion.div
-              className="relative max-w-3xl w-full"
+              variants={modalAnim}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
               onClick={(e) => e.stopPropagation()}
+              className="relative max-w-3xl w-full"
             >
               <button
                 onClick={() => setActiveItem(null)}
@@ -184,31 +222,17 @@ export default function Achievements() {
                 ✕
               </button>
 
-              <div className="relative h-[60vh] flex items-center justify-center">
-                {activeItem.images.length > 1 && (
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-0 z-10 text-white/70 hover:text-white text-3xl px-4"
-                  >
-                    ‹
-                  </button>
-                )}
-
-                <img
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={imgIndex}
                   src={activeItem.images[imgIndex]}
-                  alt=""
-                  className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                  className="max-w-full max-h-[60vh] mx-auto object-contain rounded-lg shadow-2xl"
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.4 }}
                 />
-
-                {activeItem.images.length > 1 && (
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-0 z-10 text-white/70 hover:text-white text-3xl px-4"
-                  >
-                    ›
-                  </button>
-                )}
-              </div>
+              </AnimatePresence>
 
               <div className="mt-6 bg-white/5 backdrop-blur-sm rounded-xl p-6">
                 <h3 className="text-xl font-semibold">

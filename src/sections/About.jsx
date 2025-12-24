@@ -84,6 +84,33 @@ const timeline = {
   },
 };
 
+/* ===== FAST & SMOOTH WORD REVEAL ===== */
+
+const paragraphContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.045, // ⬅ faster
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const wordAnim = {
+  hidden: {
+    opacity: 0,
+    y: 6, // ⬅ very small movement (smooth)
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.32, // ⬅ faster
+      ease: "easeOut",
+    },
+  },
+};
+
 /* ================= DATA ================= */
 
 const journey = [
@@ -132,6 +159,15 @@ export default function About() {
     margin: "-120px",
   });
 
+  const paragraphText = `I’m an ML Engineer and a Computer Engineering student (B.E., 6th
+semester), focused on building intelligent systems that perform reliably
+beyond controlled environments. Rather than concentrating solely on
+model accuracy, I prioritize understanding data behavior, system
+stability, and real-world performance. My work is driven by a
+research-oriented mindset, strong engineering discipline, and
+continuous experimentation to deliver solutions that are robust,
+interpretable, and practically deployable.`;
+
   return (
     <section
       id="about"
@@ -144,7 +180,7 @@ export default function About() {
         overflow-hidden
       "
     >
-      {/* Scroll Indicator (desktop only) */}
+      {/* Scroll Indicator */}
       <div className="hidden md:block fixed right-6 top-1/2 -translate-y-1/2 h-56 w-px bg-white/10">
         <motion.div
           style={{ height }}
@@ -160,7 +196,10 @@ export default function About() {
         animate="visible"
         className="max-w-4xl mx-auto text-center"
       >
-        <motion.p variants={fadeUp} className="text-xs sm:text-sm tracking-[0.3em] text-gray-400">
+        <motion.p
+          variants={fadeUp}
+          className="text-xs sm:text-sm tracking-[0.3em] text-gray-400"
+        >
           ABOUT
         </motion.p>
 
@@ -174,13 +213,22 @@ export default function About() {
           <DecryptedText text="Repeat" start={startDecrypt} />
         </motion.h1>
 
+        {/* ✅ SMOOTH + FAST WORD REVEAL */}
         <motion.p
-          variants={fadeUp}
+          variants={paragraphContainer}
+          initial="hidden"
+          animate="visible"
           className="mt-8 sm:mt-10 text-sm sm:text-base text-gray-400 leading-relaxed sm:leading-loose"
         >
-          I’m an ML Engineer and a Computer Engineering student (B.E., 6th
-          semester), focused on building intelligent systems that perform
-          reliably beyond controlled environments.
+          {paragraphText.split(" ").map((word, i) => (
+            <motion.span
+              key={i}
+              variants={wordAnim}
+              className="inline-block mr-1"
+            >
+              {word}
+            </motion.span>
+          ))}
         </motion.p>
       </motion.div>
 
@@ -192,7 +240,6 @@ export default function About() {
         </div>
 
         <div className="relative overflow-x-auto pb-16">
-          {/* TIMELINE */}
           <motion.div
             variants={timeline}
             initial="hidden"
@@ -200,13 +247,7 @@ export default function About() {
             className="origin-left absolute top-6 left-0 w-full h-px bg-white/20"
           />
 
-          <div
-            className="
-              relative flex justify-between
-              min-w-[800px] sm:min-w-[1000px] md:min-w-[1200px]
-              gap-24
-            "
-          >
+          <div className="relative flex justify-between min-w-[800px] sm:min-w-[1000px] md:min-w-[1200px] gap-24">
             {journey.map((item, index) => (
               <motion.div
                 key={index}
