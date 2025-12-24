@@ -17,7 +17,7 @@ const achievements = [
     description:
       "Received a conference grant of ₹2,500 for presenting and publishing the research paper titled “TrafficEye: Intelligent Traffic Optimization Using a Deep Learning Approach” at IEEE AIMV 2025.",
     tags: ["IEEE", "Research Publication", "Deep Learning", "Traffic AI"],
-    linkedin: "https://www.linkedin.com/posts/YOUR_AIMV_LINK",
+    linkedin: "https://www.linkedin.com/posts/mmpsrpc_ksv-researchexcellence-studentachievement-activity-7363819147824103424-BWH3?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEUalgoBIFnU1hOv36N8aRcsDrfEbuMzmsA",
   },
   {
     title: "Research Project Grant – Secure Park",
@@ -31,7 +31,7 @@ const achievements = [
     description:
       "Awarded a research project grant of ₹69,017 for the project “Secure Park: Real-Time Edge AI Vision and IoT-Based Campus Security and Parking Ecosystem for KSV.”",
     tags: ["Research Grant", "Edge AI", "IoT", "Computer Vision"],
-    linkedin: "https://www.linkedin.com/posts/YOUR_SECUREPARK_LINK",
+    linkedin: "https://www.linkedin.com/posts/dhairya-darji-072428284_securepark-edgeai-iot-ugcPost-7395134624517140480-XXQC?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEUalgoBIFnU1hOv36N8aRcsDrfEbuMzmsA",
   },
   {
     title: "International Conference Paper Presentation",
@@ -45,7 +45,7 @@ const achievements = [
     description:
       "Presented a peer-reviewed research paper at an international academic conference.",
     tags: ["Conference", "Research", "Presentation"],
-    linkedin: "https://www.linkedin.com/posts/YOUR_CONFERENCE_LINK",
+    linkedin: "https://www.linkedin.com/posts/charmi-padh_ieee-aimv2025-artificialintelligence-activity-7362914486275526656-UdAp?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEUalgoBIFnU1hOv36N8aRcsDrfEbuMzmsA",
   },
   {
     title: "Summer Internship – Reliance Industries Limited",
@@ -57,7 +57,7 @@ const achievements = [
     description:
       "Completed a summer internship at Reliance Industries Limited, working on real-time AI/ML solutions and predictive analytics.",
     tags: ["Internship", "AI/ML", "Industry Experience"],
-    linkedin: "https://www.linkedin.com/posts/YOUR_RELIANCE_LINK",
+    linkedin: "https://www.linkedin.com/posts/charmi-padh_relianceindustries-internshipexperience-machinelearning-activity-7340794345119277058-iD-B?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEUalgoBIFnU1hOv36N8aRcsDrfEbuMzmsA",
   },
   {
     title: "NPTEL Online Certification",
