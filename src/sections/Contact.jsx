@@ -88,8 +88,8 @@ export default function Contact() {
           <BrandCircle
             icon={<GraduationCap size={32} />}
             title="Google Scholar"
-            subtitle="scholar.google.com"
-            href="PASTE_YOUR_GOOGLE_SCHOLAR_PROFILE_LINK_HERE"
+            subtitle="Charmi Padh"
+            href="https://scholar.google.com/citations?user=v6bOJ5wAAAAJ&hl=en&oi=ao"
             color="#4285F4"
           />
 

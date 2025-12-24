@@ -90,7 +90,7 @@ const paragraphContainer = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.045, // ⬅ faster
+      staggerChildren: 0.045,
       delayChildren: 0.3,
     },
   },
@@ -99,13 +99,13 @@ const paragraphContainer = {
 const wordAnim = {
   hidden: {
     opacity: 0,
-    y: 6, // ⬅ very small movement (smooth)
+    y: 6,
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.32, // ⬅ faster
+      duration: 0.32,
       ease: "easeOut",
     },
   },
@@ -141,8 +141,14 @@ export default function About() {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const educationRef = useRef(null);
+  const paragraphRef = useRef(null); // ✅ added
 
   const isEducationInView = useInView(educationRef, {
+    once: true,
+    margin: "-120px",
+  });
+
+  const isParagraphInView = useInView(paragraphRef, {
     once: true,
     margin: "-120px",
   });
@@ -213,11 +219,12 @@ interpretable, and practically deployable.`;
           <DecryptedText text="Repeat" start={startDecrypt} />
         </motion.h1>
 
-        {/* ✅ SMOOTH + FAST WORD REVEAL */}
+        {/* ✅ PARAGRAPH ANIMATION STARTS ONLY WHEN PAGE IS VISITED */}
         <motion.p
+          ref={paragraphRef}
           variants={paragraphContainer}
           initial="hidden"
-          animate="visible"
+          animate={isParagraphInView ? "visible" : "hidden"}
           className="mt-8 sm:mt-10 text-sm sm:text-base text-gray-400 leading-relaxed sm:leading-loose"
         >
           {paragraphText.split(" ").map((word, i) => (
