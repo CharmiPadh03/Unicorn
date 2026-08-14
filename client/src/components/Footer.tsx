@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function Footer() {
   return (
-    <footer className="mt-20 py-8 text-center text-sm bg-[#11162A]">
+    <footer className="mt-12 md:mt-20 py-8 px-5 text-center text-xs sm:text-sm bg-[#11162A]">
       <motion.p
         initial={{ opacity: 0, y: 8 }}
         whileInView={{ opacity: 1, y: 0 }}

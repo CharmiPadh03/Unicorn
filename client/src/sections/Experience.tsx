@@ -39,7 +39,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="relative py-28 bg-[#0B0F1A] overflow-hidden"
+      className="relative py-16 md:py-28 bg-[#0B0F1A] overflow-hidden"
     >
       {/* SECTION HEADING */}
       <motion.h2
@@ -47,13 +47,13 @@ export default function Experience() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-4xl md:text-5xl font-extrabold mt-6 text-center"
+        className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-6 text-center px-5"
       >
         Experience<span className="text-(--accent)">.</span>
       </motion.h2>
 
       {/* ⬇️ GAP BETWEEN HEADING & CARDS */}
-      <div className="mt-20 space-y-32">
+      <div className="mt-12 md:mt-20 space-y-16 md:space-y-32">
         {experiences.map((exp, i) => (
           <motion.div
             key={i}
@@ -61,7 +61,7 @@ export default function Experience() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="relative max-w-6xl mx-auto px-6"
+            className="relative max-w-6xl mx-auto px-5 sm:px-6"
           >
             {/* IMAGE PANEL */}
             {exp.image && (
@@ -79,7 +79,7 @@ export default function Experience() {
                 transition={{ duration: 0.9, ease: "easeOut" }}
                 viewport={{ once: true }}
                 className={`
-                  relative h-40 md:h-[260px]
+                  relative h-48 sm:h-56 md:h-[260px]
                   overflow-hidden rounded-2xl
                   ${i % 2 === 0 ? "md:ml-0" : "md:ml-auto"}
                 `}
@@ -112,21 +112,21 @@ export default function Experience() {
               viewport={{ once: true }}
               className="
                 relative z-10
-                -mt-16 md:-mt-20
+                -mt-10 sm:-mt-14 md:-mt-20
                 bg-[#0B0F1A]/90
                 backdrop-blur-xl
                 border border-white/10
                 rounded-2xl
-                p-6 md:p-8
+                p-5 sm:p-6 md:p-8
                 max-w-3xl
               "
             >
               <div className="flex items-start gap-3">
-                <div className="text-(--accent)">
+                <div className="text-(--accent) shrink-0 mt-1">
                   <Briefcase size={18} />
                 </div>
 
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-lg md:text-2xl font-semibold">
                     {exp.org}
                   </h3>
@@ -149,7 +149,7 @@ export default function Experience() {
                 {exp.description}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-5 sm:mt-6 flex flex-wrap gap-2 sm:gap-3">
                 {exp.skills.map((skill, idx) => (
                   <motion.span
                     key={idx}
@@ -158,7 +158,7 @@ export default function Experience() {
                     transition={{ delay: idx * 0.06 }}
                     viewport={{ once: true }}
                     className="
-                      text-xs px-4 py-1.5
+                      text-xs px-3 sm:px-4 py-1.5
                       border border-(--accent)/40
                       text-(--accent)
                       rounded-full

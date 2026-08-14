@@ -116,14 +116,14 @@ export default function Achievements() {
   const [imgIndex, setImgIndex] = useState(0);
 
   return (
-    <section id="achievements" className="py-20 bg-black text-white">
+    <section id="achievements" className="py-16 md:py-20 bg-black text-white">
       {/* TITLE */}
       <motion.h2
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-4xl md:text-5xl font-extrabold mt-6 text-center"
+        className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-6 text-center px-5"
       >
         Achievements<span className="text-(--accent)">.</span>
       </motion.h2>
@@ -134,9 +134,9 @@ export default function Achievements() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="w-full px-8 lg:px-12 mt-20"
+        className="w-full px-5 sm:px-8 lg:px-12 mt-12 md:mt-20"
       >
-        <div className="columns-1 sm:columns-2 lg:columns-4 gap-10 space-y-10">
+        <div className="columns-1 sm:columns-2 lg:columns-4 gap-6 sm:gap-8 lg:gap-10 space-y-6 sm:space-y-8 lg:space-y-10">
           {achievements.map((item, idx) => {
             const isLandscape = item.layout === "landscape";
 
@@ -160,6 +160,8 @@ export default function Achievements() {
                   <motion.img
                     src={item.images[0]}
                     alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                     variants={imageHover}
                     whileHover="hover"
                     className="absolute inset-0 w-full h-full object-cover"
@@ -167,20 +169,20 @@ export default function Achievements() {
 
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
 
-                  <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-black/40 backdrop-blur-sm">
-                    <h3 className="text-[15px] font-semibold">
+                  <div className="absolute bottom-0 left-0 right-0 px-4 sm:px-5 py-3 sm:py-4 bg-black/40 backdrop-blur-sm">
+                    <h3 className="text-sm sm:text-[15px] font-semibold">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-white/90 mt-1">
+                    <p className="text-xs sm:text-sm text-white/90 mt-1">
                       {item.subtitle}
                     </p>
                   </div>
                 </div>
 
                 {/* TAGS + LINKEDIN */}
-                <div className="px-5 py-4 border-t border-white/5">
+                <div className="px-4 sm:px-5 py-4 border-t border-white/5">
                   <div className="flex items-center justify-between gap-3">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 min-w-0">
                       {item.tags.map((tag, i) => (
                         <span
                           key={i}
@@ -197,7 +199,8 @@ export default function Achievements() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-[#0A66C2] hover:scale-110 transition"
+                        aria-label={`${item.title} on LinkedIn`}
+                        className="text-[#0A66C2] hover:scale-110 transition shrink-0"
                       >
                         <Linkedin size={18} />
                       </a>
@@ -214,26 +217,39 @@ export default function Achievements() {
       <AnimatePresence>
         {activeItem && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-6 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm
+                       overflow-y-auto overscroll-contain
+                       flex items-start justify-center
+                       px-4 sm:px-6 py-16 sm:py-20"
             onClick={() => setActiveItem(null)}
           >
+            {/* Close sits above everything and stays reachable while scrolling. */}
+            <button
+              onClick={() => setActiveItem(null)}
+              aria-label="Close"
+              className="fixed top-4 right-4 z-20 w-10 h-10 rounded-full
+                         bg-white/10 hover:bg-white/20 backdrop-blur-sm
+                         text-white/90 hover:text-white text-xl
+                         flex items-center justify-center transition"
+            >
+              ✕
+            </button>
+
             <motion.div
               variants={modalAnim}
               initial="hidden"
               animate="visible"
               exit="exit"
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-3xl w-full"
+              className="relative max-w-3xl w-full my-auto"
             >
-              <button
-                onClick={() => setActiveItem(null)}
-                className="absolute -top-10 right-0 text-white/80 hover:text-white text-2xl"
+              {/* SLIDESHOW — height scales with viewport; arrows get their own
+                  gutter so they never sit on top of the image. */}
+              <div
+                className="relative flex items-center justify-center
+                           h-[42vh] sm:h-[52vh] md:h-[60vh]
+                           px-11 sm:px-14"
               >
-                ✕
-              </button>
-
-              {/* SLIDESHOW — FIXED HEIGHT (ONLY CHANGE) */}
-              <div className="relative flex items-center justify-center h-[60vh]">
                 {activeItem.images.length > 1 && (
                   <button
                     onClick={() =>
@@ -243,7 +259,12 @@ export default function Achievements() {
                           activeItem.images.length
                       )
                     }
-                    className="absolute left-0 z-10 px-3 py-2 text-white text-3xl hover:scale-110 transition"
+                    aria-label="Previous image"
+                    className="absolute left-0 z-10 w-10 h-10 rounded-full
+                               bg-white/10 hover:bg-white/20
+                               text-white text-3xl leading-none
+                               flex items-center justify-center
+                               hover:scale-110 transition"
                   >
                     ‹
                   </button>
@@ -253,6 +274,9 @@ export default function Achievements() {
                   <motion.img
                     key={imgIndex}
                     src={activeItem.images[imgIndex]}
+                    alt={`${activeItem.title} — image ${imgIndex + 1} of ${
+                      activeItem.images.length
+                    }`}
                     initial={{ opacity: 0, x: 40 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -40 }}
@@ -269,7 +293,12 @@ export default function Achievements() {
                           (prev + 1) % activeItem.images.length
                       )
                     }
-                    className="absolute right-0 z-10 px-3 py-2 text-white text-3xl hover:scale-110 transition"
+                    aria-label="Next image"
+                    className="absolute right-0 z-10 w-10 h-10 rounded-full
+                               bg-white/10 hover:bg-white/20
+                               text-white text-3xl leading-none
+                               flex items-center justify-center
+                               hover:scale-110 transition"
                   >
                     ›
                   </button>
@@ -277,14 +306,14 @@ export default function Achievements() {
               </div>
 
               {/* TEXT (POSITION NOW FIXED) */}
-              <div className="mt-6 bg-white/5 backdrop-blur-sm rounded-xl p-6">
-                <h3 className="text-xl font-semibold">
+              <div className="mt-5 sm:mt-6 bg-white/5 backdrop-blur-sm rounded-xl p-5 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold">
                   {activeItem.title}
                 </h3>
-                <p className="text-white/80 mt-1">
+                <p className="text-sm sm:text-base text-white/80 mt-1">
                   {activeItem.subtitle}
                 </p>
-                <p className="text-white/70 mt-4 leading-relaxed">
+                <p className="text-sm sm:text-base text-white/70 mt-4 leading-relaxed">
                   {activeItem.description}
                 </p>
               </div>

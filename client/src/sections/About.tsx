@@ -80,10 +80,23 @@ const fadeUp: Variants = {
   },
 };
 
-const timeline: Variants = {
+/** Horizontal rail — drawn left-to-right on lg+ where the timeline is a row. */
+const timelineX: Variants = {
   hidden: { scaleX: 0 },
   visible: {
     scaleX: 1,
+    transition: {
+      duration: 2.2,
+      ease: "easeInOut",
+    },
+  },
+};
+
+/** Vertical rail — drawn top-to-bottom below lg, where the timeline stacks. */
+const timelineY: Variants = {
+  hidden: { scaleY: 0 },
+  visible: {
+    scaleY: 1,
     transition: {
       duration: 2.2,
       ease: "easeInOut",
@@ -187,9 +200,9 @@ interpretable, and practically deployable.`;
       ref={sectionRef}
       className="
         relative bg-[#0B0F1A] text-gray-200
-        px-4 sm:px-6
-        py-20 md:py-32
-        space-y-20 md:space-y-32
+        px-5 sm:px-6
+        py-16 md:py-32
+        space-y-16 md:space-y-32
         overflow-hidden
       "
     >
@@ -248,30 +261,40 @@ interpretable, and practically deployable.`;
 
       {/* EDUCATION */}
       <div ref={educationRef} className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-12 md:mb-16">
+        <div className="flex items-center gap-3 mb-10 md:mb-16">
           <GraduationCap size={26} />
           <h2 className="text-2xl sm:text-3xl font-bold">Education</h2>
         </div>
 
-        <div className="relative overflow-x-auto pb-16">
+        {/* Stacks vertically below lg; becomes a horizontal timeline at lg+. */}
+        <div className="relative pb-6 lg:pb-16">
+          {/* Vertical rail (mobile / tablet) — sits on the circle centres. */}
           <motion.div
-            variants={timeline}
+            variants={timelineY}
             initial="hidden"
             animate={isEducationInView ? "visible" : "hidden"}
-            className="origin-left absolute top-6 left-0 w-full h-px bg-white/20"
+            className="lg:hidden origin-top absolute top-6 bottom-6 left-6 w-px bg-white/20"
           />
 
-          <div className="relative flex justify-between min-w-[800px] sm:min-w-[1000px] md:min-w-[1200px] gap-24">
+          {/* Horizontal rail (lg+) */}
+          <motion.div
+            variants={timelineX}
+            initial="hidden"
+            animate={isEducationInView ? "visible" : "hidden"}
+            className="hidden lg:block origin-left absolute top-7 left-0 w-full h-px bg-white/20"
+          />
+
+          <div className="relative flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-16">
             {journey.map((item, index) => (
               <motion.div
                 key={index}
                 variants={fadeUp}
                 initial="hidden"
                 animate={isEducationInView ? "visible" : "hidden"}
-                className="max-w-xs"
+                className="flex items-start gap-5 lg:block lg:max-w-xs"
               >
                 <div
-                  className={`w-14 h-14 rounded-full flex items-center justify-center mb-8
+                  className={`shrink-0 w-12 h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center lg:mb-8
                   ${
                     item.current
                       ? "border-2 border-[#4F8CFF] shadow-[0_0_28px_rgba(79,140,255,0.45)]"
@@ -281,12 +304,16 @@ interpretable, and practically deployable.`;
                   <GraduationCap size={20} />
                 </div>
 
-                <h3 className="font-semibold text-lg">{item.title}</h3>
-                <p className="text-sm text-gray-400 mt-1">{item.year}</p>
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-base sm:text-lg">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-gray-400 mt-1">{item.year}</p>
 
-                <div className="mt-5 space-y-1 text-sm text-gray-300">
-                  <p>{item.institute}</p>
-                  <p className="text-gray-400">{item.location}</p>
+                  <div className="mt-3 lg:mt-5 space-y-1 text-sm text-gray-300">
+                    <p>{item.institute}</p>
+                    <p className="text-gray-400">{item.location}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}

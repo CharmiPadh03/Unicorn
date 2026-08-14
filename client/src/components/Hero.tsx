@@ -77,7 +77,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden px-4 sm:px-6"
+      className="relative min-h-svh flex items-center overflow-hidden px-4 sm:px-6 py-28 sm:py-32"
     >
       <LetterGlitchBackground />
 

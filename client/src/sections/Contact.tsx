@@ -34,14 +34,14 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative bg-(--bg-main) text-white py-28 overflow-hidden"
+      className="relative bg-(--bg-main) text-white py-16 md:py-28 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none opacity-30">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_30%,rgba(255,255,255,0.06),transparent_40%)]" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6">
         {/* Header */}
         <motion.div
           variants={fadeUp}
@@ -51,18 +51,22 @@ export default function Contact() {
           className="flex items-center gap-4 mb-4"
         >
           <span className="text-xl">↗</span>
-          <h2 className="text-2xl font-semibold">Connect With Me</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold">Connect With Me</h2>
         </motion.div>
 
-        <div className="h-px w-full bg-white/10 mb-20" />
+        <div className="h-px w-full bg-white/10 mb-12 md:mb-20" />
 
-        {/* ICON ROW */}
+        {/* ICON ROW — grid on small screens (flex + huge gaps blew the layout
+            apart on phones), single centred row again from lg up. */}
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="flex justify-center gap-28 mb-28 flex-wrap"
+          className="grid grid-cols-2 sm:grid-cols-3
+                     lg:flex lg:flex-wrap lg:justify-center
+                     gap-x-4 gap-y-10 sm:gap-x-8 lg:gap-x-14 xl:gap-x-24
+                     mb-16 md:mb-24"
         >
           <BrandCircle
             icon={<Linkedin size={32} />}
@@ -113,17 +117,19 @@ export default function Contact() {
           className="flex items-center gap-4 mb-4"
         >
           <Mail size={20} />
-          <h2 className="text-2xl font-semibold">Contact Information</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold">
+            Contact Information
+          </h2>
         </motion.div>
 
-        <div className="h-px w-full bg-white/10 mb-16" />
+        <div className="h-px w-full bg-white/10 mb-10 md:mb-16" />
 
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-12"
+          className="grid md:grid-cols-2 gap-5 md:gap-12"
         >
           <InfoCard
             icon={<Mail />}
@@ -168,7 +174,7 @@ function BrandCircle({ icon, title, subtitle, href, color }: BrandCircleProps) {
       className="flex flex-col items-center text-center group"
     >
       <div
-        className="relative w-24 h-24 rounded-full border-2 overflow-hidden
+        className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 overflow-hidden
                    flex items-center justify-center"
         style={{ borderColor: color }}
       >
@@ -190,8 +196,10 @@ function BrandCircle({ icon, title, subtitle, href, color }: BrandCircleProps) {
         </div>
       </div>
 
-      <p className="mt-4 font-medium">{title}</p>
-      <p className="text-xs text-(--text-muted) mt-1">{subtitle}</p>
+      <p className="mt-3 sm:mt-4 font-medium text-sm sm:text-base">{title}</p>
+      <p className="text-[11px] sm:text-xs text-(--text-muted) mt-1 break-words max-w-[10rem]">
+        {subtitle}
+      </p>
     </motion.a>
   );
 }
@@ -208,7 +216,7 @@ function GithubCircle({ icon, title, subtitle, href }: SocialCircleProps) {
       className="flex flex-col items-center text-center group"
     >
       <div
-        className="relative w-24 h-24 rounded-full border-2 border-white
+        className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-white
                    flex items-center justify-center
                    transition-all duration-300
                    group-hover:border-white/60
@@ -219,8 +227,10 @@ function GithubCircle({ icon, title, subtitle, href }: SocialCircleProps) {
         </div>
       </div>
 
-      <p className="mt-4 font-medium">{title}</p>
-      <p className="text-xs text-(--text-muted) mt-1">{subtitle}</p>
+      <p className="mt-3 sm:mt-4 font-medium text-sm sm:text-base">{title}</p>
+      <p className="text-[11px] sm:text-xs text-(--text-muted) mt-1 break-words max-w-[10rem]">
+        {subtitle}
+      </p>
     </motion.a>
   );
 }
@@ -238,21 +248,21 @@ function InfoCard({ icon, title, value }: InfoCardProps) {
     <motion.div
       variants={fadeUp}
       whileHover={{ y: -4 }}
-      className="flex items-center gap-6 p-6 rounded-2xl
+      className="flex items-center gap-4 sm:gap-6 p-5 sm:p-6 rounded-2xl
                  bg-white/5 border border-white/10
                  transition hover:bg-white/10"
     >
       <div
-        className="w-12 h-12 rounded-full bg-(--accent)/15
+        className="w-12 h-12 shrink-0 rounded-full bg-(--accent)/15
                    text-(--accent)
                    flex items-center justify-center"
       >
         {icon}
       </div>
 
-      <div>
+      <div className="min-w-0">
         <p className="text-sm text-(--text-muted)">{title}</p>
-        <p className="font-medium">{value}</p>
+        <p className="font-medium text-sm sm:text-base break-words">{value}</p>
       </div>
     </motion.div>
   );

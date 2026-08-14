@@ -81,21 +81,21 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <p className="text-sm tracking-widest text-(--accent)">
+          <p className="text-xs sm:text-sm tracking-widest text-(--accent)">
             WORK
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-2">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold mt-2">
             Projects & <span className="text-(--accent)">Research</span>
           </h2>
         </motion.div>
 
         {/* Toggle */}
-        <div className="flex justify-center gap-4 mb-10">
+        <div className="flex justify-center gap-3 sm:gap-4 mb-8 sm:mb-10">
           {(["projects", "research"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition ${
+              className={`px-5 sm:px-6 py-2 rounded-full text-sm font-medium transition ${
                 activeTab === tab
                   ? "bg-(--accent) text-black"
                   : "bg-white/10 text-white hover:bg-white/20"
@@ -107,7 +107,7 @@ export default function Projects() {
         </div>
 
         {/* LIST */}
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6 sm:gap-8">
           {data.map((p, i) => (
             <motion.div
               key={`${activeTab}-${i}`}
@@ -127,7 +127,11 @@ export default function Projects() {
               className="relative rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-5 sm:p-6"
             >
               {/* TOP RIGHT ICONS */}
-              <div className="absolute top-4 right-4 flex gap-3">
+              <div
+                className="absolute top-4 right-4 z-10 flex gap-3 items-center
+                           rounded-full bg-black/45 backdrop-blur-sm px-2.5 py-1.5
+                           lg:bg-transparent lg:backdrop-blur-none lg:px-0 lg:py-0"
+              >
                 {p.github && (
                   <a
                     href={p.github}
@@ -153,19 +157,22 @@ export default function Projects() {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-6 lg:gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,480px)_1fr] gap-5 sm:gap-6 lg:gap-8 items-center">
                 {/* Image */}
                 <div className="w-full max-w-[460px] aspect-video overflow-hidden rounded-xl">
                   <img
                     src={p.image}
                     alt={p.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 </div>
 
-                {/* Content */}
-                <div>
-                  <h3 className="text-lg sm:text-xl font-bold mb-1">
+                {/* Content — pad the right edge at lg so the title clears the
+                    absolutely-positioned GitHub/DOI icons. */}
+                <div className="min-w-0 lg:pr-14">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold mb-1">
                     {p.title}
                   </h3>
 
