@@ -1,10 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { Linkedin } from "lucide-react";
 import { useState } from "react";
+import type { Achievement } from "../types";
 
 /* ================= ACHIEVEMENTS DATA ================= */
 
-const achievements = [
+const achievements: Achievement[] = [
   {
     title: "IEEE AIMV 2025 – Research Paper & Conference Grant",
     subtitle:
@@ -72,14 +74,14 @@ const achievements = [
 
 /* ================= ANIMATIONS ================= */
 
-const containerAnim = {
+const containerAnim: Variants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.12, delayChildren: 0.2 },
   },
 };
 
-const cardAnim = {
+const cardAnim: Variants = {
   hidden: { opacity: 0, y: 28, scale: 0.96 },
   visible: {
     opacity: 1,
@@ -89,14 +91,14 @@ const cardAnim = {
   },
 };
 
-const imageHover = {
+const imageHover: Variants = {
   hover: {
     scale: 1.06,
     transition: { duration: 0.6, ease: "easeOut" },
   },
 };
 
-const modalAnim = {
+const modalAnim: Variants = {
   hidden: { opacity: 0, scale: 0.92, y: 20 },
   visible: {
     opacity: 1,
@@ -110,7 +112,7 @@ const modalAnim = {
 /* ================= COMPONENT ================= */
 
 export default function Achievements() {
-  const [activeItem, setActiveItem] = useState(null);
+  const [activeItem, setActiveItem] = useState<Achievement | null>(null);
   const [imgIndex, setImgIndex] = useState(0);
 
   return (

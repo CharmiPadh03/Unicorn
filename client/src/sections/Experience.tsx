@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Briefcase } from "lucide-react";
+import type { ExperienceItem } from "../types";
 
-const experiences = [
+const experiences: ExperienceItem[] = [
   {
     title: "Gasifier Reactor Refractory Lifespan Prediction",
     org: "Reliance Industries Limited",

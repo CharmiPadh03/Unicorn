@@ -4,15 +4,22 @@ import {
   useTransform,
   useInView,
 } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { GraduationCap } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
+import type { JourneyItem } from "../types";
 
 /* ================= DECRYPTED TEXT ================= */
 
 const CHARS =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%";
 
-function DecryptedText({ text, start }) {
+interface DecryptedTextProps {
+  text: string;
+  start: boolean;
+}
+
+function DecryptedText({ text, start }: DecryptedTextProps) {
   const [display, setDisplay] = useState("");
   const [done, setDone] = useState(false);
 
@@ -51,7 +58,7 @@ function DecryptedText({ text, start }) {
 
 /* ================= ANIMATIONS ================= */
 
-const container = {
+const container: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -61,7 +68,7 @@ const container = {
   },
 };
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 48 },
   visible: {
     opacity: 1,
@@ -73,7 +80,7 @@ const fadeUp = {
   },
 };
 
-const timeline = {
+const timeline: Variants = {
   hidden: { scaleX: 0 },
   visible: {
     scaleX: 1,
@@ -86,7 +93,7 @@ const timeline = {
 
 /* ===== FAST & SMOOTH WORD REVEAL ===== */
 
-const paragraphContainer = {
+const paragraphContainer: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -96,7 +103,7 @@ const paragraphContainer = {
   },
 };
 
-const wordAnim = {
+const wordAnim: Variants = {
   hidden: {
     opacity: 0,
     y: 6,
@@ -113,7 +120,7 @@ const wordAnim = {
 
 /* ================= DATA ================= */
 
-const journey = [
+const journey: JourneyItem[] = [
   {
     title: "Class 10th",
     year: "2019 – 2020",
@@ -138,10 +145,10 @@ const journey = [
 /* ================= COMPONENT ================= */
 
 export default function About() {
-  const sectionRef = useRef(null);
-  const headingRef = useRef(null);
-  const educationRef = useRef(null);
-  const paragraphRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const educationRef = useRef<HTMLDivElement>(null);
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
 
   const isEducationInView = useInView(educationRef, {
     once: true,

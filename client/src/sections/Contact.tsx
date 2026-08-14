@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+import type { ReactNode } from "react";
 import {
   Linkedin,
   Github,
@@ -11,7 +13,7 @@ import {
 
 /* ================= ANIMATIONS ================= */
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
@@ -20,7 +22,7 @@ const fadeUp = {
   },
 };
 
-const stagger = {
+const stagger: Variants = {
   visible: {
     transition: { staggerChildren: 0.18 },
   },
@@ -142,8 +144,20 @@ export default function Contact() {
 
 /* ================= ICONS ================= */
 
+interface SocialCircleProps {
+  icon: ReactNode;
+  title: string;
+  subtitle: string;
+  href: string;
+}
+
+interface BrandCircleProps extends SocialCircleProps {
+  /** Brand colour used for the border and the slide-up fill. */
+  color: string;
+}
+
 /* Brand slide fill */
-function BrandCircle({ icon, title, subtitle, href, color }) {
+function BrandCircle({ icon, title, subtitle, href, color }: BrandCircleProps) {
   return (
     <motion.a
       href={href}
@@ -183,7 +197,7 @@ function BrandCircle({ icon, title, subtitle, href, color }) {
 }
 
 /* GitHub: white → transparent white */
-function GithubCircle({ icon, title, subtitle, href }) {
+function GithubCircle({ icon, title, subtitle, href }: SocialCircleProps) {
   return (
     <motion.a
       href={href}
@@ -213,7 +227,13 @@ function GithubCircle({ icon, title, subtitle, href }) {
 
 /* ================= INFO CARD ================= */
 
-function InfoCard({ icon, title, value }) {
+interface InfoCardProps {
+  icon: ReactNode;
+  title: string;
+  value: string;
+}
+
+function InfoCard({ icon, title, value }: InfoCardProps) {
   return (
     <motion.div
       variants={fadeUp}

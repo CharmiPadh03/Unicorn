@@ -1,9 +1,10 @@
-import { useCallback } from "react"; 
+import { useCallback } from "react";
 import Particles from "react-particles";
 import { loadFull } from "tsparticles";
+import type { Engine } from "tsparticles-engine";
 
 export default function ParticlesBackground() {
-  const particlesInit = useCallback(async (engine) => {
+  const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);
   }, []);
 

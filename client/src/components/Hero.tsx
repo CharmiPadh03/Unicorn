@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
+import type { MotionProps, Variants } from "framer-motion";
 import { Github } from "lucide-react";
 import LetterGlitchBackground from "../components/LetterGlitchBackground";
 
 /* ================= ANIMATIONS ================= */
 
-const container = {
+const container: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -14,7 +15,7 @@ const container = {
   },
 };
 
-const fadeUpBlur = {
+const fadeUpBlur: Variants = {
   hidden: {
     opacity: 0,
     y: 40,
@@ -31,7 +32,7 @@ const fadeUpBlur = {
   },
 };
 
-const nameLeft = {
+const nameLeft: Variants = {
   hidden: { opacity: 0, x: -40 },
   visible: {
     opacity: 1,
@@ -43,7 +44,7 @@ const nameLeft = {
   },
 };
 
-const nameRight = {
+const nameRight: Variants = {
   hidden: { opacity: 0, x: 40 },
   visible: {
     opacity: 1,
@@ -55,7 +56,7 @@ const nameRight = {
   },
 };
 
-const pulse = {
+const pulse: MotionProps = {
   animate: {
     boxShadow: [
       "0 0 0px rgba(165,107,255,0.2)",

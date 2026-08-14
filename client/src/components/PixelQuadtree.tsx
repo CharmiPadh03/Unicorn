@@ -1,17 +1,39 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
+
+interface PixelQuadtreeProps {
+  /** Optional URL to a video. If null and useFileUpload=true, user picks file. */
+  videoSrc?: string | null;
+  /** Show file input if true. */
+  useFileUpload?: boolean;
+  /** Max tile size in pixels (coarsest block). */
+  maxTile?: number;
+  /** Min tile size in pixels (finest block). */
+  minTile?: number;
+  /** Base threshold for variance that triggers subdivision. */
+  varianceThreshold?: number;
+  /** How much motion increases subdivision sensitivity. */
+  motionBoost?: number;
+  /** Color for the "figure". */
+  baseColor?: string;
+  /** Background color. */
+  bgColor?: string;
+}
+
+/** Resolved tuning values handed down to the recursive draw. */
+interface QuadtreeParams {
+  minTile: number;
+  maxTile: number;
+  varianceThreshold: number;
+  motionBoost: number;
+  baseColor: string;
+  bgColor: string;
+}
+
+type QuadtreeStatus = "idle" | "running" | "paused" | "loaded-file";
 
 /**
  * PixelQuadtree - adaptive pixelation driven by frame variance + motion
- *
- * Props:
- *  - videoSrc (string|null): optional URL to a video. If null and useFileUpload=true, user picks file.
- *  - useFileUpload (bool): show file input if true (default true).
- *  - maxTile (number): max tile size in pixels (coarsest block).
- *  - minTile (number): min tile size in pixels (finest block).
- *  - varianceThreshold (number): base threshold for variance that triggers subdivision.
- *  - motionBoost (number): how much motion increases subdivision sensitivity.
- *  - baseColor (string): color for the "figure" (default red).
- *  - bgColor (string): background color (default light gray).
  *
  * Example:
  * <PixelQuadtree useFileUpload={true} baseColor="#e53935" bgColor="#f0f0f0" />
@@ -25,21 +47,28 @@ export default function PixelQuadtree({
   motionBoost = 2.2,
   baseColor = "#e53935",
   bgColor = "#f0f0f0",
-}) {
-  const canvasRef = useRef(null);
-  const offRef = useRef(null);
-  const videoRef = useRef(null);
-  const [status, setStatus] = useState("idle");
+}: PixelQuadtreeProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const offRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [status, setStatus] = useState<QuadtreeStatus>("idle");
 
   // helper: read pixel luminance at index in Uint8ClampedArray
-  function luminanceAt(data, idx) {
+  function luminanceAt(data: Uint8ClampedArray, idx: number): number {
     const r = data[idx];
     const g = data[idx + 1];
     const b = data[idx + 2];
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   }
 
-  function roundRect(ctx, x, y, w, h, r) {
+  function roundRect(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    r: number
+  ) {
     ctx.beginPath();
     const radius = Math.min(r, w / 2, h / 2);
     ctx.moveTo(x + radius, y);
@@ -51,7 +80,17 @@ export default function PixelQuadtree({
   }
 
   // subdivide/draw quadtree-style
-  function subdivideDraw(ctx, imgData, motionData, x, y, w, h, scale, params) {
+  function subdivideDraw(
+    ctx: CanvasRenderingContext2D,
+    imgData: ImageData,
+    motionData: Float32Array | null,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    scale: number,
+    params: QuadtreeParams
+  ) {
     const { data, width: imgW } = imgData;
 
     // sample step to reduce compute
@@ -124,35 +163,36 @@ export default function PixelQuadtree({
     if (!canvas || !off || !video) return;
     const ctx = canvas.getContext("2d", { alpha: false });
     const offCtx = off.getContext("2d", { alpha: false });
+    if (!ctx || !offCtx) return;
 
-    let prevGray = null;
-    let raf = null;
-    const params = { minTile, maxTile, varianceThreshold, motionBoost, baseColor, bgColor };
+    let prevGray: Float32Array | null = null;
+    let raf: number | null = null;
+    const params: QuadtreeParams = { minTile, maxTile, varianceThreshold, motionBoost, baseColor, bgColor };
 
     function processFrame() {
-      if (video.readyState < 2) {
+      if (video!.readyState < 2) {
         raf = requestAnimationFrame(processFrame);
         return;
       }
 
-      const vw = video.videoWidth || video.clientWidth || 640;
-      const vh = video.videoHeight || video.clientHeight || 360;
+      const vw = video!.videoWidth || video!.clientWidth || 640;
+      const vh = video!.videoHeight || video!.clientHeight || 360;
       const maxW = Math.min(window.innerWidth, vw);
       const scale = maxW / vw;
       const drawW = Math.floor(vw * scale);
       const drawH = Math.floor(vh * scale);
 
-      canvas.width = drawW;
-      canvas.height = drawH;
+      canvas!.width = drawW;
+      canvas!.height = drawH;
 
       // analysis size
       const analysisW = Math.max(8, Math.floor(drawW / (params.maxTile / 2)));
       const analysisH = Math.max(8, Math.floor(drawH / (params.maxTile / 2)));
-      off.width = analysisW;
-      off.height = analysisH;
+      off!.width = analysisW;
+      off!.height = analysisH;
 
-      offCtx.drawImage(video, 0, 0, analysisW, analysisH);
-      const imgData = offCtx.getImageData(0, 0, analysisW, analysisH);
+      offCtx!.drawImage(video!, 0, 0, analysisW, analysisH);
+      const imgData = offCtx!.getImageData(0, 0, analysisW, analysisH);
 
       // compute grayscale and motion map
       const gray = new Float32Array(analysisW * analysisH);
@@ -161,7 +201,7 @@ export default function PixelQuadtree({
         gray[p] = 0.2126 * r + 0.7152 * g + 0.0722 * b;
       }
 
-      let motionMap = null;
+      let motionMap: Float32Array | null = null;
       if (prevGray) {
         motionMap = new Float32Array(analysisW * analysisH);
         for (let i = 0; i < prevGray.length; i++) {
@@ -171,11 +211,11 @@ export default function PixelQuadtree({
       prevGray = gray;
 
       // clear with bg
-      ctx.fillStyle = params.bgColor;
-      ctx.fillRect(0, 0, drawW, drawH);
+      ctx!.fillStyle = params.bgColor;
+      ctx!.fillRect(0, 0, drawW, drawH);
 
       // draw quadtree
-      subdivideDraw(ctx, imgData, motionMap, 0, 0, drawW, drawH, scale * (vw / analysisW), params);
+      subdivideDraw(ctx!, imgData, motionMap, 0, 0, drawW, drawH, scale * (vw / analysisW), params);
 
       raf = requestAnimationFrame(processFrame);
     }
@@ -200,13 +240,15 @@ export default function PixelQuadtree({
       video.removeEventListener("pause", onPause);
       if (raf) cancelAnimationFrame(raf);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoSrc, baseColor, bgColor, minTile, maxTile, varianceThreshold, motionBoost]);
 
-  function handleFile(e) {
+  function handleFile(e: ChangeEvent<HTMLInputElement>) {
     const f = e.target.files && e.target.files[0];
     if (!f) return;
     const url = URL.createObjectURL(f);
     const v = videoRef.current;
+    if (!v) return;
     v.src = url;
     v.play().catch(() => {});
     setStatus("loaded-file");
