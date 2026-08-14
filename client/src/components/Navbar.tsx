@@ -74,7 +74,7 @@ export default function Navbar() {
         {/* BRAND */}
         <a
           href="#home"
-          className="text-lg sm:text-xl md:text-2xl font-extrabold tracking-widest"
+          className="text-base sm:text-xl md:text-2xl font-extrabold tracking-wider sm:tracking-widest"
           style={{ fontFamily: "'Orbitron', sans-serif" }}
         >
           CHARMI PADH
@@ -133,8 +133,10 @@ export default function Navbar() {
 
         {/* MOBILE TOGGLE */}
         <button
-          className="md:hidden text-white p-2 rounded-lg"
+          className="md:hidden text-white p-2 -mr-2 rounded-lg shrink-0"
           onClick={() => setOpen(!open)}
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={open}
         >
           {open ? <X size={26} /> : <Menu size={26} />}
         </button>
@@ -142,7 +144,7 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {open && (
-        <ul className="md:hidden mt-4 flex flex-col gap-2">
+        <ul className="md:hidden mt-4 flex flex-col gap-1 max-h-[65vh] overflow-y-auto overscroll-contain animate-slideDown">
           {MOBILE_LINKS.map(([label, href]) => (
             <li key={label}>
               <a
