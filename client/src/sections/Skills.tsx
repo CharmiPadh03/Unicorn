@@ -7,8 +7,9 @@ import {
   GitBranch,
   Layout,
 } from "lucide-react";
+import type { SkillGroup } from "../types";
 
-const skills = [
+const skills: SkillGroup[] = [
   {
     title: "Languages",
     icon: <Code size={20} />,

@@ -1,16 +1,71 @@
-# React + Vite
+# Charmi Padh — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio site. React 19 + TypeScript + Vite 7, styled with Tailwind CSS v4
+and animated with Framer Motion.
 
-Currently, two official plugins are available:
+## Layout
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+.
+├── README.md
+├── .gitignore
+└── client/                     # the web app (all app code lives here)
+    ├── index.html
+    ├── package.json
+    ├── vite.config.ts
+    ├── eslint.config.js
+    ├── tsconfig.json           # solution file → app + node configs
+    ├── tsconfig.app.json       # src/ (browser)
+    ├── tsconfig.node.json      # vite.config.ts (node)
+    ├── public/                 # static assets served from /
+    │   ├── achievements/
+    │   ├── certificates/
+    │   ├── projects/
+    │   └── resume/
+    └── src/
+        ├── main.tsx            # entry point
+        ├── App.tsx             # section composition
+        ├── index.css           # theme tokens + global keyframes
+        ├── types.ts            # shared data-shape types
+        ├── components/         # reusable UI (Navbar, Hero, Footer, backgrounds)
+        └── sections/           # page sections (About, Skills, … Contact)
+```
 
-## React Compiler
+The app is a single page; navigation is anchor-based (`#about`, `#skills`, …) with an
+`IntersectionObserver` driving the active nav state. There is no router.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting started
 
-## Expanding the ESLint configuration
+All commands run from `client/`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd client
+npm install
+npm run dev
+```
+
+## Scripts
+
+| Script              | Does                                          |
+| ------------------- | --------------------------------------------- |
+| `npm run dev`       | Vite dev server with HMR                      |
+| `npm run build`     | `tsc -b` typecheck, then production build     |
+| `npm run typecheck` | Typecheck only                                |
+| `npm run lint`      | ESLint (typescript-eslint + React rules)      |
+| `npm run preview`   | Serve the production build locally            |
+
+## Content
+
+Section content is plain typed data at the top of each section file — edit the arrays,
+not the markup:
+
+| Content         | File                             | Type              |
+| --------------- | -------------------------------- | ----------------- |
+| Education       | `src/sections/About.tsx`         | `JourneyItem[]`   |
+| Skills          | `src/sections/Skills.tsx`        | `SkillGroup[]`    |
+| Experience      | `src/sections/Experience.tsx`    | `ExperienceItem[]`|
+| Projects/research | `src/sections/Projects.tsx`    | `Project[]`       |
+| Achievements    | `src/sections/Achievements.tsx`  | `Achievement[]`   |
+
+Types live in `src/types.ts`. Images referenced by these arrays are paths under
+`client/public/`.

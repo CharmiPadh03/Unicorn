@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 export default function ScrollProgress() {
-  const barRef = useRef(null);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const bar = barRef.current;
@@ -24,7 +24,7 @@ export default function ScrollProgress() {
 
     function animate() {
       current += (target - current) * ease;
-      bar.style.transform = `scaleX(${current})`;
+      bar!.style.transform = `scaleX(${current})`;
       requestAnimationFrame(animate);
     }
 

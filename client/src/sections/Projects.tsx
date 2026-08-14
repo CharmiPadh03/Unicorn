@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import { useState } from "react";
+import type { Project } from "../types";
+
+type ProjectTab = "projects" | "research";
 
 /* ================= DATA (UNCHANGED EXCEPT GITHUB FIELD) ================= */
 
-const projects = [
+const projects: Project[] = [
   {
     title: "SunAdapt – Smart Solar Optimization System",
     desc:
@@ -25,7 +28,7 @@ const projects = [
   },
 ];
 
-const researchProjects = [
+const researchProjects: Project[] = [
   {
     title: "TrafficEye – Intelligent Traffic Violation Detection System",
     desc:
@@ -61,7 +64,7 @@ const researchProjects = [
 /* ================= COMPONENT ================= */
 
 export default function Projects() {
-  const [activeTab, setActiveTab] = useState("projects");
+  const [activeTab, setActiveTab] = useState<ProjectTab>("projects");
   const data = activeTab === "projects" ? projects : researchProjects;
 
   return (
@@ -88,7 +91,7 @@ export default function Projects() {
 
         {/* Toggle */}
         <div className="flex justify-center gap-4 mb-10">
-          {["projects", "research"].map((tab) => (
+          {(["projects", "research"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}

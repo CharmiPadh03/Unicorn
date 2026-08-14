@@ -9,6 +9,19 @@ import {
   X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import type { ReactNode } from "react";
+
+/** Matches the `.icon-<anim>-active` keyframe classes in index.css. */
+type NavAnim = "glow" | "rotate" | "slide" | "sparkle" | "trophy" | "bounce";
+
+const MOBILE_LINKS: ReadonlyArray<readonly [label: string, href: string]> = [
+  ["About", "#about"],
+  ["Skills", "#skills"],
+  ["Experience", "#experience"],
+  ["Projects", "#projects"],
+  ["Achievements", "#achievements"],
+  ["Contact", "#contact"],
+];
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
@@ -130,14 +143,7 @@ export default function Navbar() {
       {/* MOBILE MENU */}
       {open && (
         <ul className="md:hidden mt-4 flex flex-col gap-2">
-          {[
-            ["About", "#about"],
-            ["Skills", "#skills"],
-            ["Experience", "#experience"],
-            ["Projects", "#projects"],
-            ["Achievements", "#achievements"],
-            ["Contact", "#contact"],
-          ].map(([label, href]) => (
+          {MOBILE_LINKS.map(([label, href]) => (
             <li key={label}>
               <a
                 href={href}
@@ -164,7 +170,15 @@ export default function Navbar() {
 
 /* ================= NAV ITEM ================= */
 
-function NavItem({ href, label, icon, active, anim }) {
+interface NavItemProps {
+  href: string;
+  label: string;
+  icon: ReactNode;
+  active: boolean;
+  anim: NavAnim;
+}
+
+function NavItem({ href, label, icon, active, anim }: NavItemProps) {
   return (
     <li>
       <a
