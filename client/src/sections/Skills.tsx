@@ -58,7 +58,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="bg-[#111827] text-gray-200 px-5 sm:px-6 py-20 md:py-36"
+      className="relative overflow-hidden bg-[#111827] text-gray-200 px-5 sm:px-6 py-20 md:py-36"
     >
       {/* HEADER */}
       <motion.div

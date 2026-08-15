@@ -31,7 +31,25 @@ body {
   background: linear-gradient(180deg, var(--navy-900), var(--navy-800));
   color: var(--text-main);
   font-family: system-ui, sans-serif;
+}
+
+/*
+  Kill horizontal overflow at the root.
+
+  This must be on <html> as well as <body>: with it on <body> alone the value is
+  propagated to the viewport and <body> itself reverts to `visible`, which some
+  mobile browsers still measure as an overflowing document. They then
+  shrink-to-fit the page, which widens the *layout* viewport and silently
+  activates larger breakpoints — a phone ends up rendering the tablet layout.
+
+  `clip` is preferred over `hidden` because it does not create a scroll
+  container; `hidden` is kept first as the fallback for older engines.
+*/
+html,
+body {
+  max-width: 100%;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 a {
