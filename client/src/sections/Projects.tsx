@@ -70,7 +70,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative py-16 md:py-20 bg-linear-to-b from-[#0B0F1A] via-[#0E1324] to-[#0B0F1A]"
+      className="relative py-16 md:py-20 overflow-hidden bg-linear-to-b from-[#0B0F1A] via-[#0E1324] to-[#0B0F1A]"
     >
       <div className="relative z-10 max-w-screen-2xl mx-auto px-5 sm:px-8 md:px-10">
         {/* Heading */}
